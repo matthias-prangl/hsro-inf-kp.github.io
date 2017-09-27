@@ -1,0 +1,17 @@
+title: "Konzepte der Programmiersprachen (KP)"
+email: korbinian.riedhammer@fh-rosenheim.de
+description: "Materials for KP"
+baseurl: ""
+url: "https://hsro-inf-kp.github.io"
+exclude: ["LICENSE", "Remarks.md"]
+github_username: ["sikoried"]
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
