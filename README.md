@@ -34,9 +34,9 @@ Credits: Team project (PStA) consisting of materials (slides, assignments, solut
 
 > No class on Oct 3 (Tag der Einheit)
 
-- **Introduction (Oct 10, [slides](01s-intro/), [incomplete list of topics](topics/))**
+- **Introduction (Oct 10, [slides](01s-intro/) with topics)**
 	
-	Intro to the class and requirements, quick overview of the available topics; team building.
+	Intro to the class and requirements, brief overview of the available topics.
 
 - **Scala pt. 1 (Oct 17)**
 
