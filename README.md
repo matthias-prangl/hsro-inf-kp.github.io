@@ -34,17 +34,17 @@ Credits: Team project (PStA) consisting of materials (slides, assignments, solut
 
 > No class on Oct 3 (Tag der Einheit)
 
-- **Introduction (Oct 10, [slides](01s-intro/) with topics)**
+- **Introduction (Oct 10, [slides](/01s-intro/) with topics)**
 	
 	Intro to the class and requirements, brief overview of the available topics.
 
-- **Scala pt. 1 (Oct 17)**
+- **Functional Programming in Scala pt. 1 (Oct 17, [slides](/02s-fp-1))**
 
-	SBT, Scala basics and advanced syntax.
+	Function evaluation and the substitution model, higher order functions and how to model classes in Scala.
 
-- **Scala pt. 2 (Oct 24)**
+- **Functional Programming in Scala pt. 2 (Oct 24)**
 
-	Thinking functional.
+	Learn about pattern matching, and how to use it to work with lists and collections.
 
 > No class on Oct 31 (Reformationstag, Lutherjahr 2017)
 
