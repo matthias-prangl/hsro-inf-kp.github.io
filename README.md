@@ -48,17 +48,22 @@ Credits: Team project (PStA) consisting of materials (slides, assignments, solut
 
 > No class on Oct 31 (Reformationstag, Lutherjahr 2017)
 
-- **Student presentations _tba_ (Nov 7 ... Jan 23)**
-	- Nov 7:
-	- Nov 14:
-	- Nov 21:
-	- Nov 28:
-	- Dec 5:
-	- Dec 12:
-	- Dec 19:
-	- Jan 9:
-	- Jan 16:
-	- Jan 23:
+- **Functional Programming in Scala pt. 3 (Nov 7)**
+	
+	_TBA_
+
+- **Student presentations (Nov 14 ... Jan 30)**
+	- Nov 14:	Reactive programming
+	- Nov 21:	Actors
+	- Nov 28: 	C++17
+	- Dec 5: 	C++: operator overloading and template meta programming
+	- Dec 12:	Two-way data binding in MVC
+	- Dec 19:	Monads (Scala)
+	- Jan 9:	Decorators and mixins (Python)
+	- Jan 16:	Dependency Injection
+	- Jan 23:	Squeeze for performance
+	- Jan 30 (1):	Properties
+	- Jan 30 (2):	Rust
 
 
 _Subscribe to [https://github.com/hsro-inf-kp/hsro-inf-kp.github.io](https://github.com/hsro-inf-kp) repository to follow updates._
