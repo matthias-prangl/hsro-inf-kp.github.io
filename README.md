@@ -38,7 +38,7 @@ Credits: Team project (PStA) consisting of materials (slides, assignments, solut
 	
 	Intro to the class and requirements, brief overview of the available topics.
 
-- **Functional Programming in Scala pt. 1 (Oct 17, [slides](/02s-fp-1))**
+- **Functional Programming in Scala pt. 1 (Oct 17, [slides](/02s-fp-1), [assignments](/02a-fp-1/))**
 
 	Function evaluation and the substitution model, higher order functions and how to model classes in Scala.
 
