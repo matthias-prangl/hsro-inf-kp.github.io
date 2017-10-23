@@ -42,7 +42,7 @@ Credits: Team project (PStA) consisting of materials (slides, assignments, solut
 
 	Function evaluation and the substitution model, higher order functions and how to model classes in Scala.
 
-- **Functional Programming in Scala pt. 2 (Oct 24)**
+- **Functional Programming in Scala pt. 2 (Oct 24, [assignments](/03a-fp-2/))**
 
 	Learn about pattern matching, and how to use it to work with lists and collections.
 
