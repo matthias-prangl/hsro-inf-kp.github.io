@@ -1,10 +1,10 @@
-title: "Konzepte der Programmiersprachen (KP)"
-email: korbinian.riedhammer@fh-rosenheim.de
-description: "Materials for KP"
+title: "Rust - memory and type safety"
+#email: korbinian.riedhammer@fh-rosenheim.de
+#description: "Materials for KP"
 baseurl: ""
-url: "https://hsro-inf-kp.github.io"
+url: "https://matthias-prangl.github.io"
 exclude: ["LICENSE", "Remarks.md"]
-github_username: ["sikoried"]
+github_username: ["matthias-prangl"]
 
 # Build settings
 markdown: kramdown
