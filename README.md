@@ -1,43 +1,41 @@
-# Rust memory and type safety
-
-## Rust Basics
+# Rust Basics
 
 Why Rust? Who uses it? Some Hisotry
 
-### Basic Syntax
+## Basic Syntax
 
 Variables, Tuples, Functions, Blocks, Keywords (let, mut...), Macros
 
-### Structs
+## Structs
 
 Struct syntax, Tuple structs, unit-like structs
 
-### Methods
+## Methods
 
 Methods of structs
 
-### Traits
+## Traits
 
 traits are like interfaces (C++, Java), how do they add to safety?
 
-## Memory Safety
+# Memory Safety
 
 What is it and how does rust guarantee it? (borrowing, ownership), comparison to other languages
 
-### Borrowing and Ownership
+## Borrowing and Ownership
 
 Lifetime in Structs, Functions, ...
 
-### Smart pointers
+## Smart pointers
 
 Box<T>, Rc<T>, Arc<T>
 
 RefCell<T>?
 
-### Threads
+## Threads
 
 Closures, ownership in threads
 
-## Type Safety 
+# Type Safety 
 
 What is it and how does rust guarantee it? (bound check at compile time, other checks at compile time), comparison to other languages
