@@ -12,7 +12,7 @@ memory and type safety
 - Ownership
 - References
 
----
++++
 
 ## Agenda
 
@@ -21,7 +21,7 @@ memory and type safety
 - Closures 
 - Threads
 
-+++
+---
 
 # Rust Basics
 
