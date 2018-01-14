@@ -25,7 +25,7 @@ memory and type safety
 
 # Rust Basics
 
----
++++
 
 ## Variables
 
@@ -35,7 +35,7 @@ let mut var = 2;
 let var_u32: u32 = 3;
 ```
 
----
++++
 
 ## Functions
 
@@ -45,8 +45,8 @@ fn sum_fun(x: i32, y: i32) -> i32 {
 }
 ```
 
----
++++
 
 ## Project Structure
 
-+++
+---
