@@ -36,11 +36,56 @@ Note that there is no trailing semicolon at the end of the function body.
 
 ## Structs
 
-Struct syntax, Tuple structs, unit-like structs
+Structures (`struct`) assemble multiple values of possibly different types into one value.
+A `struct` in Rust can have on of three types: _named-field_, _tuple-like_ and _unit-like_.
+The Rust convention for naming structs is _CamelCase_.
 
-## Methods
+The most basic type is the unit-like struct.
+This is a struct with no elements that does not occupy any memory.
+Since those types of structs are only useful in specific use cases they are not further explained at this point.
 
-Methods of structs
+A tuple-like struct resembles a tuple.
+Those structs are useful for definig new types to achieve stricter type checking.
+Instead of commenting what a tuple contains, the name of the tuple-like struct can be self explaining and also be checked by the compiler.
+The following example shows how a tuple-like struct whit two elements (i32, u32) is defined:
+
+```rust
+struct TupleStruct(i32, u32);
+```
+
+Named-field structs assign a name to each element in the struct.
+Those the named elements are called _fields_.
+The following example shows how to define a struct `Student`:
+
+```rust
+struct Student {
+    last_name: String,
+    first_name: String,
+    id: u32,
+    major: String,
+    semester: u8
+}
+```
+
+Construct a value of the defined type like this:
+
+```rust
+    let last_name = "Doe".to_string();
+    let first_name = "John".to_string();
+    let s = Student { 
+        first_name, 
+        last_name, 
+        id: 1234, 
+        major: "INF-M".to_string(), 
+        semester: 5
+    };
+```
+
+Note the used shorthand to assign the `first_name` and `last_name` fields.
+
+### Methods in Structs
+
+
 
 ## Traits
 
@@ -85,9 +130,10 @@ stack backtrace:
 
 # Memory Safety
 
+
 What is it and how does rust guarantee it? (borrowing, ownership), comparison to other languages
 
-## Borrowing and Ownership
+## Ownership and Borrowing
 
 Lifetime in Structs, Functions, ...
 
