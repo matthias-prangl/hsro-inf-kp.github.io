@@ -217,10 +217,33 @@ This does not result in an error even though there is no explicit call to `.clon
 Giving the ownership of a value away at a function call is often not what you want.
 You may have a function to print the content of a structure in a formatted way.
 The value would not be usable after the function call unless you pass the ownership back in a rather clunk way like `x = print_x(x);`.
-This also requires x to be mutable since you assign a new value to it.
+This would also require x to be mutable since it gets assigned a new value.
 
 To keep ownership of a value at the variable you can _borrow_ the value to the function.
 To borrow something you need to pass the _reference_ to the variable you'd like to borrow.
+
+```rust 
+let b = Box::new(123);
+let c = &b;
+let d = &b; //no error since the value is borrowed
+```
+
+In the example a box containing an integer is created, the ownership of the box is passed to the variable `b`.
+Other variables can borrow this box by referencing it with `&`.
+This a an example for an _immutable reference_. 
+Rust lets you create any number of immutable references to a value as long as you guarantee not to modify the source.
+For this reason _mutable references_ are rather verbose in the code:
+
+```rust 
+fn mut_fun(b: &mut Box<i32>) {}
+
+let mut b = Box::new(123);
+let c = &b;
+mut_fun(&mut b);
+```
+
+Apart from the obvious requirement of being a mutable variable you also have to explicitly state that you pass a mutable reference `&mut` to a function.
+The example will produce a compiler error, since the code tries to pass a mutable reference while a immutable reference is active on the same value.
 
 ## Smart pointers
 
