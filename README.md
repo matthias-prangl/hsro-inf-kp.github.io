@@ -1,4 +1,4 @@
-# Rust Basics
+# Rust
 
 Rust is a statically typed system programming language developed by Mozilla with a focus on safety while still maintaining high performance.
 The main goals of Rust are to prevent segmentation faults and guaranteeing thread safety.
@@ -47,7 +47,7 @@ Since those types of structs are only useful in specific use cases they are not 
 A tuple-like struct resembles a tuple.
 Those structs are useful for definig new types to achieve stricter type checking.
 Instead of commenting what a tuple contains, the name of the tuple-like struct can be self explaining and also be checked by the compiler.
-The following example shows how a tuple-like struct whit two elements (i32, u32) is defined:
+The following example shows how a tuple-like struct with two elements (i32, u32) is defined:
 
 ```rust
 struct TupleStruct(i32, u32);
@@ -133,9 +133,94 @@ stack backtrace:
 
 What is it and how does rust guarantee it? (borrowing, ownership), comparison to other languages
 
-## Ownership and Borrowing
+## Ownership
 
-Lifetime in Structs, Functions, ...
+Every value in Rust has a single owner.
+This owner determines the lifetime of the value.
+
+Take for example this piece of code: 
+```rust
+struct Car { model: String, year: u16 }
+
+fn main() {
+    let mut cars = vec![ //car get allocated
+        Car{model: "A4".to_string(), year: 2006}, 
+        Car{model: "Clio".to_string(), year: 1998} ];
+} //cars gets dropped
+```
+Since each value has a singe owner, in this example each `Car` owns its fields which in turn own their values.
+`cars` owns a vector which owns its elements of type `Car`.
+As soon as the vector leaves the scope every value associated with `cars` is _dropped_.
+Dropping a value means the memory associated with this value is freed.
+
+
+### Passing ownership with move
+If you reassign a value to another variable the value doesn't get copied like for example in C++.
+In Rust the ownership of that value is _moved_ to the new variable.
+This, in turn means that the source of the value becomes uninitialized.
+Using the now unintialized variable results in a compiler error with a hint that the value is used after it has been moved.
+In the following example we try to reassign a Box twice, which results in an error:
+
+```rust 
+    let a = Box::new((123, 321));
+    let b = a;  //compiler hint: value moved here
+    let c = a;  //compiler error: value used here after move
+```
+
+Moving the ownership of values to other variables is much cheaper than doing a deep copy of the values.
+It is also very clear to the program when it can clear the associated memory of a variable.
+To truly copy a value you have to explicitly copy them. 
+In the example above the compiler error could be solved by calling `a.clone()` instead of a simple assignment.
+
+### Moving on: moves in functions
+Moves don't only occur if you assign a value to a variable. 
+Values are also moved if they are passed as a parameter to a function.
+If you passed a variable to a function this variable is now uninitialized. 
+
+```rust
+fn do_sth(s: String) { }
+
+let x = "I better get moving!".to_string();
+do_sth(x);
+println!("{}", x);  // compiler error: value used here after move
+
+```
+
+In the example `x` gives up its ownership of the String _I better get moving!_ and passes it to the function `do_sth`.
+Trying to print the value of `x` after the move occured results in a compiler error.
+You have to consider this especially if you try to call a function in a loop.
+Unless you assign a new value to the variable after the function call this will certainly result in the same error.
+
+A function can also return ownership of a value it owns.
+For example a function `fn count_words(s: String) -> (String, u32) {...}` counts the words in a string and returns the ownership to a tuple containing the input string and the wordcount. 
+
+### Types that don't move: Copy Types
+
+The prevous examples have shown how ownership gets implicitly moved to a new owner.
+Maybe you have noticed that the data types in the examples were rather complex.
+A `Copy` type can be every type that doesn't need any special handling in case of the associated values being dropped.
+Assigning a `Copy` type to several variables creates copies of the values.
+The only types that can be of `Copy` are those which can be copied bit by bit.
+This includes compound types like arrays an tuples but only if the contained values are `Copy`.
+
+```rust
+let x: i32 = 5;
+let y = x;  //value of variable x is copied to y
+let z = x;  //value of variable x is copied to z
+```
+
+The example shows the reassignment of the value stored in `x` to `y` and `z`.
+This does not result in an error even though there is no explicit call to `.clone()`.
+
+## References and Borrowing
+
+Giving the ownership of a value away at a function call is often not what you want.
+You may have a function to print the content of a structure in a formatted way.
+The value would not be usable after the function call unless you pass the ownership back in a rather clunk way like `x = print_x(x);`.
+This also requires x to be mutable since you assign a new value to it.
+
+To keep ownership of a value at the variable you can _borrow_ the value to the function.
+To borrow something you need to pass the _reference_ to the variable you'd like to borrow.
 
 ## Smart pointers
 
