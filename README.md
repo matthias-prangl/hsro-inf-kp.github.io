@@ -223,9 +223,12 @@ To keep ownership of a value at the variable you can _borrow_ the value to the f
 To borrow something you need to pass the _reference_ to the variable you'd like to borrow.
 
 ```rust 
+fn print_b(b: &Box<i32>) { }
+
 let b = Box::new(123);
 let c = &b;
-let d = &b; //no error since the value is borrowed
+let d = &b; 
+print_b(&b); //no error since the value is borrowed
 ```
 
 In the example a box containing an integer is created, the ownership of the box is passed to the variable `b`.
