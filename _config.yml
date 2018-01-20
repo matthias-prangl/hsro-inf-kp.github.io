@@ -1,8 +1,6 @@
 title: "Rust - memory and type safety"
-#email: korbinian.riedhammer@fh-rosenheim.de
-#description: "Materials for KP"
-baseurl: ""
-url: "https://matthias-prangl.github.io"
+baseurl: "https://matthias-prangl.github.io/rust"
+url: "https://matthias-prangl.github.io/rust"
 exclude: ["LICENSE", "Remarks.md"]
 github_username: ["matthias-prangl"]
 
