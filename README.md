@@ -55,7 +55,8 @@ struct TupleStruct(i32, u32);
 
 Named-field structs assign a name to each element in the struct.
 Those the named elements are called _fields_.
-The following example shows how to define a struct `Student`:
+The following example shows how to define a struct `Student` and assigns a value of the type to a variable `s`.
+To assign a value to a field a shorthand like in `last_name` can be used.
 
 ```rust
 struct Student {
@@ -65,31 +66,20 @@ struct Student {
     major: String,
     semester: u8
 }
+
+let last_name = "Doe".to_string();
+let first_name = "John".to_string();
+let s = Student { 
+    first_name, 
+    last_name, 
+    id: 1234, 
+    major: "INF-M".to_string(), 
+    semester: 5
+};
 ```
-
-Construct a value of the defined type like this:
-
-```rust
-    let last_name = "Doe".to_string();
-    let first_name = "John".to_string();
-    let s = Student { 
-        first_name, 
-        last_name, 
-        id: 1234, 
-        major: "INF-M".to_string(), 
-        semester: 5
-    };
-```
-
-Note the used shorthand to assign the `first_name` and `last_name` fields.
 
 ### Methods in Structs
 
-
-
-## Traits
-
-traits are like interfaces (C++, Java), how do they add to safety?
 
 # Type Safety 
 
@@ -126,7 +116,34 @@ thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 4'
 stack backtrace:
 ```
 
-## Error Handling
+## Option<T> and Result<T, E>
+
+If you've ever written some code in C, C++ oder Java you most likely had to check for a null pointer at some point.
+If not, have a look at the following C code:
+
+```c
+FILE *file_handle;
+file_handle = fopen("path/to/some_file", "r");
+if(file_handle != NULL) {
+    do_sth_with_file();
+}
+```
+
+In the example a `file_handle` is declared and later assigned the return value of the `fopen` function call.
+`fopen` returns a pointer to a `FILE` if the file could be opened, otherwise a null pointer is returned.
+
+Rust does not allow any kind of null pointer.
+It isn't even allowed to declare a variable and not initialize it.
+So how does Rust handle functions that may or may not return a value? 
+The answer is the `Option` type. 
+An `Option` is defined as follows:
+
+```rust 
+pub enum Option<T> {
+    None,
+    Some(T),
+}
+```
 
 # Memory Safety
 
@@ -234,7 +251,7 @@ print_b(&b); //no error since the value is borrowed
 In the example a box containing an integer is created, the ownership of the box is passed to the variable `b`.
 Other variables can borrow this box by referencing it with `&`.
 This a an example for an _immutable reference_. 
-Rust lets you create any number of immutable references to a value as long as you guarantee not to modify the source.
+Rust lets you create any number of immutable references to a value as long as you guarantee not to modify the source as long as the references are active.
 For this reason _mutable references_ are rather verbose in the code:
 
 ```rust 
@@ -246,11 +263,61 @@ mut_fun(&mut b);
 ```
 
 Apart from the obvious requirement of being a mutable variable you also have to explicitly state that you pass a mutable reference `&mut` to a function.
-The example will produce a compiler error, since the code tries to pass a mutable reference while a immutable reference is active on the same value.
+There can be no other reference to the value while a mutable reference is alive.
+The example above will produce a compiler error, since the code tries to pass a mutable reference while a immutable reference is active on the same value.
+
+## Lifetimes
+
+Earlier we mentioned that an "owner determines the lifetime" of a value and that a value gets dropped when it leaves the scope it has been associated with.
+The lifetime of a value helps the Rust compiler to assure that a reference is safe to use. 
+The following example will not compile, because `new_s` is dropped when it leaves its scope.
+Since Strings are implemented as a wrapper over a Vector the String is stored on the heap.
+This would leave `s` pointing to an uninitialized memory location. 
+
+```rust
+let mut s = "Hallo!"; 
+{
+    let new_s = "Hi!".to_string();
+    s = &new_s; //error: borrowed value does not live long enough
+}
+```
+
+While the above example makes it obvious which lifetime is associated with each value, using references in functions or field can make lifetimes unclear.
+
+## Traits and generics
+
+traits are like interfaces (C++, Java), how do they add to safety?
 
 ## Smart pointers
 
-Box<T>, Rc<T>, Arc<T>
+__Box\<T\>:__ In some of the previous exmples you have already seen the `Box<T>` smart pointer.
+While being considered a smart pointer, a Box only provides rather simple functionality.
+A Box simply allows you to store data on the heap instead of the stack.
+In the previous examples this has been used to avoid copying of primitive types when transferring ownership.
+A more practical use case for a Box is to use it when you need to use a value of known size, while the size cannot be known at compile time.
+This might me the case if you need to use a recursive type, like a struct containing a value of itself as a field. 
+The following example does not comile, since the compiler assumes the worst: Option is never `None` so the size of `RecType` is infinite. 
+Rust knows your stack is not of infinite size and hints you in the right direction:
+
+```rust
+struct RecType {            //error: recursive type has infinite size
+    next: Option<RecType>,  //hint: recursive without idirection
+}
+```
+
+To fix this, we can put the `RecType` field in a Box.
+
+```rust
+struct RecType {
+    next: Option<Box<RecType>>,
+}
+let r = RecType{next: Some(Box::new(RecType{next: None}))};
+```
+
+Rust now knows the exact size of any `RecType` value.
+Because the Box is just a pointer to a location in the heap every `RecType` occupies exactly 8 Byte on the stack, the `RecType`s it points to are allocated on heap.
+
+__Rc\<T\>:__
 
 RefCell<T>?
 
