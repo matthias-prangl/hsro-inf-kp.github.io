@@ -280,11 +280,11 @@ Rust lets you create any number of immutable references to a value as long as yo
 For this reason _mutable references_ are rather verbose in the code:
 
 ```rust 
-fn mut_fun(b: &mut Box<i32>) {}
+fn mut_fun(b: &mut Vec<i32>) { b.push(234); }
 
-let mut b = Box::new(123);
+let mut b = vec![123];
 let c = &b;
-mut_fun(&mut b);
+mut_fun(&mut b); //error: mutable borrow occurs here
 ```
 
 Apart from the obvious requirement of being a mutable variable you also have to explicitly state that you pass a mutable reference `&mut` to a function.
@@ -295,6 +295,7 @@ The example above will produce a compiler error, since the code tries to pass a 
 
 Earlier we mentioned that an "owner determines the lifetime" of a value and that a value gets dropped when it leaves the scope it has been associated with.
 The lifetime of a value helps the Rust compiler to assure that a reference is safe to use. 
+In other words, the compiler ensures all borrows are valid.
 The following example will not compile, because `new_s` is dropped when it leaves its scope.
 Since Strings are implemented as a wrapper over a Vector the String is stored on the heap.
 This would leave `s` pointing to an uninitialized memory location. 
@@ -308,6 +309,41 @@ let mut s = "Hallo!";
 ```
 
 While the above example makes it obvious which lifetime is associated with each value, using references in functions or field can make lifetimes unclear.
+
+Say you want to pass two references to a function and have the function return one of those references.
+To ensure safety, the compiler needs to know how long the returned reference lives.
+Consider the following (pointless, but illustrative) example which does nothing but take a reference to a vector and a refernce to a string and returns the reference to the vector:
+
+```rust 
+fn ret_ref<'a, 'b>(x: &'a Vec<i32>, y: &'b str) -> &'a Vec<i32> { x }
+
+let ret;
+{
+    let x = vec![123];
+    let y = "holá";
+    ret = ref_ref(&x, y);
+} // x dropped here while still borrowed
+println!("{:?}", ret);
+```
+
+The compiler will display the error as shown in the comment.
+But to be able to provide this error you need to explicitly declare the lifetimes of references.
+A lifetime is declared with a tick mark (e.g. `'a`) and has to be provided for the returned reference as well as the value that is reference by the returned value.
+The compiler can then decide if the returned reference is still valid at any point in the program.
+
+Annotating explicit lifetimes looks very verbose an doesn't really help understanding code any better in many situations.
+For this reason Rust allows you to omit lifetimes in case the compiler can derive the lifetimes itself (lifetime elision). 
+This can be the case if you want to return some part of a string:
+
+```rust
+fn string_until(s: &str, until: usize) -> &str { s[0..until] }
+```
+Since you only pass one reference to the function, and return a part of this very reference the lifetime can be omitted.
+You can, of course, explicitly annotate the lifetimes anyway:
+
+```rust
+fn string<'a>(s: &'a str, until usize) -> &'a str { s[0..until] }
+```
 
 ## Traits and generics
 
@@ -343,8 +379,6 @@ Rust now knows the exact size of any `RecType` value.
 Because the Box is just a pointer to a location in the heap every `RecType` occupies exactly 8 Byte on the stack, the `RecType`s it points to are allocated on heap.
 
 __Rc\<T\>:__ 
-
-RefCell<T>?
 
 ## Threads
 
