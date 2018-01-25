@@ -61,18 +61,13 @@ To assign a value to a field a shorthand like in `last_name` can be used.
 ```rust
 struct Student {
     last_name: String,
-    first_name: String,
-    id: u32,
     major: String,
     semester: u8
 }
 
 let last_name = "Doe".to_string();
-let first_name = "John".to_string();
 let s = Student { 
-    first_name, 
     last_name, 
-    id: 1234, 
     major: "INF-M".to_string(), 
     semester: 5
 };
@@ -80,6 +75,32 @@ let s = Student {
 
 ### Methods in Structs
 
+Structs can have _methods_ that are associated with the struct.
+Methods for structs are similar to methods for classes in object oriented languages.
+The methods for the structs are implemented in an `impl` block. 
+In the following example two methods for the above declared Student struct are implemented.
+A very basic `new` method creates a new value of type Student and returns the ownership to it.
+The `increase_sem` method takes the special argument `self` which is the value the method is called from.
+self is passed in as a reference, what is special about Rust references is described later.
+
+```rust
+impl Student {
+    fn new(last_name: String, major: String) -> Student {
+        Student{ last_name, major, semester: 1 }
+    }
+    
+    fn increase_sem(&mut self) {
+        self.semester += 1;
+    }
+}
+
+let mut stud = Student::new("Doe".to_string(), "INF-M".to_string());
+stud.increase_sem();
+```
+
+You can see if a method takes itself as an argument, if the method is called using `::` after the name of the struct.
+With `::` logically separates namespaces and is also used if you import a package.
+Method calls which require an instance of the struct are called with `.` as you are already familiar with from other languages.
 
 # Type Safety 
 
