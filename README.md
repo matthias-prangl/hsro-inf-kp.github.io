@@ -151,7 +151,11 @@ In the function `option_fun` an `Some` is returned if the function is called wit
 
 ```rust
 fn option_fun(b: bool) -> Option<i32> {
-    if b { Some(123) } else { None }
+    if b { 
+        Some(123) 
+    } else { 
+        None 
+    }
 }
 
 match option_fun(false) {
@@ -169,6 +173,33 @@ An alternative to `match` is the `unwrap()` method of an Option, but since it le
 
 A safe and useful method for Options is `take`.
 With `take` we take the value out of the `Option` `x` and leave `None` in its place.
+
+### Possibly returning errors with Result<T,E>
+
+If it is more sensible for a function to return an error rather than nothing in case someting goes wrong, Rust has got you covered.
+Unlike the C example above, if you try to open a file in Rust you get a `Result<T, E>` which either yields a value `T` or an error `E`.
+Like `Option<T>` the `Result<T, E>` is implemented as an enum, so you can use match to evaluate the result.
+If you receive a Result in a function and only continue if the Result contains a value you can propagate the error to the calling function using `?`.
+The `?` operator can only be used in functions that also return a `Reslut<T, E>` (or implement the trait std::ops::Try).
+The example shows a function that writes a string to the specified file. 
+In case of an error, the function immediately return with that error code, since we used the `?` operator on methods yielding a Result.
+You most likely only care if the write was not successful so we only check the `Err` in the match.
+
+```rust
+use std::fs::File;
+use std::io::{Error, Write}
+
+fn write_to_file(path: &str, msg: &str) -> Result<(), Error> {
+    let mut file =  File::create(path)?;
+    file.write_all(msg.as_bytes())?;
+    Ok(())
+}
+
+match write_to_file("file.txt", "TestText") {
+    Err(e) => println!({}, e),
+    _ => ()
+}
+```
 
 # Memory Safety
 
@@ -290,6 +321,12 @@ mut_fun(&mut b); //error: mutable borrow occurs here
 Apart from the obvious requirement of being a mutable variable you also have to explicitly state that you pass a mutable reference `&mut` to a function.
 There can be no other reference to the value while a mutable reference is alive.
 The example above will produce a compiler error, since the code tries to pass a mutable reference while a immutable reference is active on the same value.
+
+### Rules for References
+
+There really are only two major rules for using references:
+- You can either have _one_ mutable **or** _any number_ of immutable references.
+- All references must be valid at any time
 
 ## Lifetimes
 
