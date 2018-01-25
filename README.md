@@ -133,7 +133,7 @@ In the example a `file_handle` is declared and later assigned the return value o
 `fopen` returns a pointer to a `FILE` if the file could be opened, otherwise a null pointer is returned.
 
 Rust does not allow any kind of null pointer.
-It isn't even allowed to declare a variable and not initialize it.
+It isn't even allowed to use a possibly uninitialized value.
 So how does Rust handle functions that may or may not return a value? 
 The answer is the `Option` type. 
 An `Option` is defined as follows:
@@ -144,6 +144,31 @@ pub enum Option<T> {
     Some(T),
 }
 ```
+
+As you can see an Option can have the value `None` to indicate no value or `Some(T)` to indicate a value of type `T`. 
+The following example shows how to use the Option type.
+In the function `option_fun` an `Some` is returned if the function is called with `true`, otherwise `None` is returned.
+
+```rust
+fn option_fun(b: bool) -> Option<i32> {
+    if b { Some(123) } else { None }
+}
+
+match option_fun(false) {
+    Some(val) => println!("Returned {}", val),
+    None      => println!("Option is None"),
+}
+
+let mut x = option_fun(true);   //needs to be mutable to allow take()
+let y = x.take();               //move x value to y and assign None to x
+```
+
+To evaluate whether or not an Option has a value a `match` can be used.
+You probably already know `match` from other languages, so it won't be described further at this point.
+An alternative to `match` is the `unwrap()` method of an Option, but since it leads the program to panic if the Option is `None` its usage is discouraged.
+
+A safe and useful method for Options is `take`.
+With `take` we take the value out of the `Option` `x` and leave `None` in its place.
 
 # Memory Safety
 
@@ -290,7 +315,7 @@ traits are like interfaces (C++, Java), how do they add to safety?
 
 ## Smart pointers
 
-__Box\<T\>:__ In some of the previous exmples you have already seen the `Box<T>` smart pointer.
+__Box\<T\>:__ In some of the previous exmples you have already seen the `Box<T>` type being used.
 While being considered a smart pointer, a Box only provides rather simple functionality.
 A Box simply allows you to store data on the heap instead of the stack.
 In the previous examples this has been used to avoid copying of primitive types when transferring ownership.
@@ -317,7 +342,7 @@ let r = RecType{next: Some(Box::new(RecType{next: None}))};
 Rust now knows the exact size of any `RecType` value.
 Because the Box is just a pointer to a location in the heap every `RecType` occupies exactly 8 Byte on the stack, the `RecType`s it points to are allocated on heap.
 
-__Rc\<T\>:__
+__Rc\<T\>:__ 
 
 RefCell<T>?
 
