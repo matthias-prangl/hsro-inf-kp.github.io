@@ -47,7 +47,7 @@ fn sum_fun(x: i32, y: i32) -> i32 {
 +++
 ## Test 
 
-<img src="assets/simple_stack.png" height = "100">
+<img src="assets/simple_stack.png" height = "500">
 +++
 
 ## Project Structure
