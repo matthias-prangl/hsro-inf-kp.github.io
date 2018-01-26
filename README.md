@@ -99,7 +99,8 @@ stud.increase_sem();
 ```
 
 You can see if a method takes itself as an argument, if the method is called using `::` after the name of the struct.
-With `::` namespaces are logically separated and also used if you import a package.
+With `::` namespaces are logically separated.
+It is also used to import a package.
 Method calls, which require an instance of the struct are called with `.` as you are already familiar with from other languages.
 
 # Type Safety 
@@ -188,7 +189,7 @@ let mut x = option_fun(true);   //needs to be mutable to allow take()
 let y = x.take();               //move x value to y and assign None to x
 ```
 
-To evaluate whether if or if not an Option has a value, a `match` can be used.
+To evaluate whether or not an Option has a value, a `match` can be used.
 You probably already know `match` from other languages, so it won't be described further at this point.
 An alternative to `match` is the `unwrap()` method of an Option, but since it leads the program to panic if the Option is `None`, its usage is discouraged.
 
@@ -497,4 +498,14 @@ This allows you to use a value that has been defined in a different scope:
 ```rust 
 use std::rc::Rc;
 
-Closures, ownership in threads
+let r;
+{ //inner scope
+    let rc = Rc::new("hallo!");
+    r = Rc::clone(&rc);
+} //end inner scope
+println!("{}", r);
+```
+
+If you would assign a simple reference to `r` in the inner scope this piece of code would not compile. 
+The error would be _borrowed value does not live long enough_.
+As you can see, we have to explicitly call the clone method of the Rc type and pass a reference to an existing Rc value.
