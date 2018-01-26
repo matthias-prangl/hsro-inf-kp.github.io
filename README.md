@@ -222,10 +222,66 @@ match write_to_file("file.txt", "TestText") {
 }
 ```
 
+## Traits and generics
+
+Traits are similar to Interfaces in languages like Java.
+With a `Trait` you can tell the compiler what functions a given type is guaranteed to implement.
+Unlike Java, where you have to provide the Interfaces the class should implement when declaring the class, in Rust a trait can be added to any exisiting type.
+You can for example define a new trait and implement it for a primitive type like `i32`.
+Here `ExampleTrait` with a single method `print_me` is defined as a trait.
+Every type that implements this trait has to provide the defined methods:
+
+```rust
+trait ExampleTrait {
+    fn print_me(&self);
+}
+impl ExampleTrait for i32 {
+    fn print_me(&self) { println!("{}", self); }
+}
+
+23542.print_me();
+```
+
+Traits allow the compiler to check if a generic type `T` implements the methods in the given trait.
+A very common trait is `Debug` which. Debug allows you to easily print a defined struct. 
+To implement the Debug trait you can simply write `#[derive(Debug)]` above your struct and - given that any type used in the struct implements Debug itself - Debug is implemented automatically and you can print your struct using `println!("{:?}", MyStruct)`.
+
+Let's now define a function that takes a generic type `T` that implements both our ExampleTrait aswell as Debug.
+The example shows to different ways to define such a function.
+The second way is useful if you have more than one generic type to make the required parameters clear.
+
+```rust 
+fn generic_fn<T: ExampleTrait + Debug>(val: T) { println!("{:?}", val); }
+fn generic_fn<T>(val: T) where T: ExampleTrait + Debug { println!("{:?}", val); }
+```
+
 # Memory Safety
 
+Rust provides memory safety without the need for a garbage collector.
+To achieve this there are several rules in place as to how you are allowed to use variables and reference to those variables.
 
-What is it and how does rust guarantee it? (borrowing, ownership), comparison to other languages
+If you take C for example, a language that also doesn't have garbage collection you can easily end up with a _dangling pointer_.
+A dangling pointer is a pointer, that points to a memory location that might already has been freed:
+
+```c
+char* dangle() {
+    char s[20];
+    strcpy(s, "This is no good!");
+    return s;
+}
+```
+
+Even though modern compilers will warn you about returning the address of stack memory this function would compile whithout errors.
+In Rust a similar program would not compile: 
+
+```rust 
+fn dangle() -> &str {
+    let s = "hallo".to_string();
+    &s[..]
+}
+```
+
+In this section we will discuss why this program isn't able to compile by taking a closer look at ownership, references and lifetimes in Rust.
 
 ## Ownership
 
@@ -402,10 +458,6 @@ You can, of course, explicitly annotate the lifetimes anyway:
 ```rust
 fn string<'a>(s: &'a str, until usize) -> &'a str { s[0..until] }
 ```
-
-## Traits and generics
-
-traits are like interfaces (C++, Java), how do they add to safety?
 
 ## Smart pointers
 
