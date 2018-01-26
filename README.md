@@ -9,7 +9,7 @@ This blog will give you an overview over the language and addresses some of the 
 
 Variables, Tuples, Functions, Blocks, Keywords (let, mut...), Macros
 
-Variables in Rust are by default immutable. To decalre a mutable variable the `mut` keyword must be used:
+Variables in Rust are by default immutable. To declare a mutable variable the `mut` keyword must be used:
 
 ```rust
 let var = 1;            //<= an immutable variable
@@ -17,7 +17,7 @@ let mut var = 2;        //<= a mutable variable
 let var_u32: u32 = 1;   //<= a 32-bit unsigned integer
 ```
 
-Since Rust is statically typed, the information about the data types must be availiable at compile time.
+Since Rust is statically typed, the information about the data types must be available at compile time.
 In the example above the data types are implicitly inferred as `i32` - a 32-bit integer.
 The example also shows _shadowing_. _Shadowing_ allows you to reuse a variable name for a new value. 
 `var_u32` shows a variable with explicit type declaration to `u32`.
@@ -37,7 +37,7 @@ Note that there is no trailing semicolon at the end of the function body.
 ## Structs
 
 Structures (`struct`) assemble multiple values of possibly different types into one value.
-A `struct` in Rust can have on of three types: _named-field_, _tuple-like_ and _unit-like_.
+A `struct` in Rust can have one of three types: _named-field_, _tuple-like_ and _unit-like_.
 The Rust convention for naming structs is _CamelCase_.
 
 The most basic type is the unit-like struct.
@@ -45,7 +45,7 @@ This is a struct with no elements that does not occupy any memory.
 Since those types of structs are only useful in specific use cases they are not further explained at this point.
 
 A tuple-like struct resembles a tuple.
-Those structs are useful for definig new types to achieve stricter type checking.
+Those structs are useful for defining new types to achieve stricter type checking.
 Instead of commenting what a tuple contains, the name of the tuple-like struct can be self explaining and also be checked by the compiler.
 The following example shows how a tuple-like struct with two elements (i32, u32) is defined:
 
@@ -81,7 +81,7 @@ The methods for the structs are implemented in an `impl` block.
 In the following example two methods for the above declared Student struct are implemented.
 A very basic `new` method creates a new value of type Student and returns the ownership to it.
 The `increase_sem` method takes the special argument `self` which is the value the method is called from.
-self is passed in as a reference, what is special about Rust references is described later.
+"self" is passed in as a reference, what is special about Rust references will be described later.
 
 ```rust
 impl Student {
@@ -99,15 +99,15 @@ stud.increase_sem();
 ```
 
 You can see if a method takes itself as an argument, if the method is called using `::` after the name of the struct.
-With `::` logically separates namespaces and is also used if you import a package.
-Method calls which require an instance of the struct are called with `.` as you are already familiar with from other languages.
+With `::` namespaces are logically separated and also used if you import a package.
+Method calls, which require an instance of the struct are called with `.` as you are already familiar with from other languages.
 
 # Type Safety 
 
 A _type safe_ language can check if a written program is _well defined_.
 _Well defined_ programs cannot exhibit undefined behavior. 
 
-While programs in C or C++ can be well definde the compiler does not assure this. 
+While programs in C or C++ can be well defined, the compiler does not assure this. 
 Consider a C program which tries to access an element in an array that is out of the bound of the array:
 
 ```c
@@ -188,9 +188,9 @@ let mut x = option_fun(true);   //needs to be mutable to allow take()
 let y = x.take();               //move x value to y and assign None to x
 ```
 
-To evaluate whether or not an Option has a value a `match` can be used.
+To evaluate whether if or if not an Option has a value, a `match` can be used.
 You probably already know `match` from other languages, so it won't be described further at this point.
-An alternative to `match` is the `unwrap()` method of an Option, but since it leads the program to panic if the Option is `None` its usage is discouraged.
+An alternative to `match` is the `unwrap()` method of an Option, but since it leads the program to panic if the Option is `None`, its usage is discouraged.
 
 A safe and useful method for Options is `take`.
 With `take` we take the value out of the `Option` `x` and leave `None` in its place.
@@ -200,10 +200,10 @@ With `take` we take the value out of the `Option` `x` and leave `None` in its pl
 If it is more sensible for a function to return an error rather than nothing in case someting goes wrong, Rust has got you covered.
 Unlike the C example above, if you try to open a file in Rust you get a `Result<T, E>` which either yields a value `T` or an error `E`.
 Like `Option<T>` the `Result<T, E>` is implemented as an enum, so you can use match to evaluate the result.
-If you receive a Result in a function and only continue if the Result contains a value you can propagate the error to the calling function using `?`.
-The `?` operator can only be used in functions that also return a `Reslut<T, E>` (or implement the trait std::ops::Try).
+If you receive a result in a function and only continue if the result contains a value you can propagate the error to the calling function using `?`.
+The `?` operator can only be used in functions that also return a `Result<T, E>` (or implement the trait std::ops::Try).
 The example shows a function that writes a string to the specified file. 
-In case of an error, the function immediately return with that error code, since we used the `?` operator on methods yielding a Result.
+In case of an error, the function immediately returns with that error code, since we used the `?` operator on methods yielding a result.
 You most likely only care if the write was not successful so we only check the `Err` in the match.
 
 ```rust
@@ -243,11 +243,11 @@ impl ExampleTrait for i32 {
 ```
 
 Traits allow the compiler to check if a generic type `T` implements the methods in the given trait.
-A very common trait is `Debug` which. Debug allows you to easily print a defined struct. 
+A very common trait is `Debug` which allows you to easily print a defined struct. 
 To implement the Debug trait you can simply write `#[derive(Debug)]` above your struct and - given that any type used in the struct implements Debug itself - Debug is implemented automatically and you can print your struct using `println!("{:?}", MyStruct)`.
 
 Let's now define a function that takes a generic type `T` that implements both our ExampleTrait aswell as Debug.
-The example shows to different ways to define such a function.
+The example shows different ways how to define such a function.
 The second way is useful if you have more than one generic type to make the required parameters clear.
 
 ```rust 
@@ -258,7 +258,7 @@ fn generic_fn<T>(val: T) where T: ExampleTrait + Debug { println!("{:?}", val); 
 # Memory Safety
 
 Rust provides memory safety without the need for a garbage collector.
-To achieve this there are several rules in place as to how you are allowed to use variables and reference to those variables.
+To achieve this, there are several rules in place as how you are allowed to use variables and references to those variables.
 
 If you take C for example, a language that also doesn't have garbage collection you can easily end up with a _dangling pointer_.
 A dangling pointer is a pointer, that points to a memory location that might already has been freed:
@@ -271,7 +271,7 @@ char* dangle() {
 }
 ```
 
-Even though modern compilers will warn you about returning the address of stack memory this function would compile whithout errors.
+Even though modern compilers will warn you about returning the adress of stack memory this function would compile without errors.
 In Rust a similar program would not compile: 
 
 ```rust 
@@ -298,8 +298,8 @@ fn main() {
         Car{model: "Clio".to_string(), year: 1998} ];
 } //cars gets dropped
 ```
-Since each value has a singe owner, in this example each `Car` owns its fields which in turn own their values.
-`cars` owns a vector which owns its elements of type `Car`.
+Since each value has a single owner, in this example each `Car` owns its fields which in turn own their values.
+`cars` own a vector which owns its elements of type `Car`.
 As soon as the vector leaves the scope every value associated with `cars` is _dropped_.
 Dropping a value means the memory associated with this value is freed.
 
@@ -323,9 +323,9 @@ To truly copy a value you have to explicitly copy them.
 In the example above the compiler error could be solved by calling `a.clone()` instead of a simple assignment.
 
 ### Moving on: moves in functions
-Moves don't only occur if you assign a value to a variable. 
+Moves doesn't only occur if you assign a value to a variable. 
 Values are also moved if they are passed as a parameter to a function.
-If you passed a variable to a function this variable is now uninitialized. 
+If you passed a variable to a function this variable gets uninitialized. 
 
 ```rust
 fn do_sth(s: String) { }
@@ -346,7 +346,7 @@ For example a function `fn count_words(s: String) -> (String, u32) {...}` counts
 
 ### Types that don't move: Copy Types
 
-The prevous examples have shown how ownership gets implicitly moved to a new owner.
+The previous examples have shown how ownership gets implicitly moved to a new owner.
 Maybe you have noticed that the data types in the examples were rather complex.
 A `Copy` type can be every type that doesn't need any special handling in case of the associated values being dropped.
 Assigning a `Copy` type to several variables creates copies of the values.
@@ -383,7 +383,7 @@ print_b(&b); //no error since the value is borrowed
 
 In the example a box containing an integer is created, the ownership of the box is passed to the variable `b`.
 Other variables can borrow this box by referencing it with `&`.
-This a an example for an _immutable reference_. 
+This a is an example for an _immutable reference_. 
 Rust lets you create any number of immutable references to a value as long as you guarantee not to modify the source as long as the references are active.
 For this reason _mutable references_ are rather verbose in the code:
 
@@ -401,7 +401,7 @@ The example above will produce a compiler error, since the code tries to pass a 
 
 ### Rules for References
 
-There really are only two major rules for using references:
+There are only two major rules for using references:
 - You can either have _one_ mutable **or** _any number_ of immutable references.
 - All references must be valid at any time
 
@@ -422,11 +422,11 @@ let mut s = "Hallo!";
 }
 ```
 
-While the above example makes it obvious which lifetime is associated with each value, using references in functions or field can make lifetimes unclear.
+While the above example makes it obvious which lifetime is associated with each value, using references in functions or fields can make lifetimes unclear.
 
 Say you want to pass two references to a function and have the function return one of those references.
 To ensure safety, the compiler needs to know how long the returned reference lives.
-Consider the following (pointless, but illustrative) example which does nothing but take a reference to a vector and a refernce to a string and returns the reference to the vector:
+Consider the following (pointless, but illustrative) example which does nothing but take a reference to a vector and a reference to a string and returns the reference to the vector:
 
 ```rust 
 fn ret_ref<'a, 'b>(x: &'a Vec<i32>, y: &'b str) -> &'a Vec<i32> { x }
@@ -442,7 +442,7 @@ println!("{:?}", ret);
 
 The compiler will display the error as shown in the comment.
 But to be able to provide this error you need to explicitly declare the lifetimes of references.
-A lifetime is declared with a tick mark (e.g. `'a`) and has to be provided for the returned reference as well as the value that is reference by the returned value.
+A lifetime is declared with a tick mark (e.g. `'a`) and has to be provided for the returned reference as well as the value that is referenced by the returned value.
 The compiler can then decide if the returned reference is still valid at any point in the program.
 
 Annotating explicit lifetimes looks very verbose an doesn't really help understanding code any better in many situations.
@@ -461,13 +461,13 @@ fn string<'a>(s: &'a str, until usize) -> &'a str { s[0..until] }
 
 ## Smart pointers
 
-__Box\<T\>:__ In some of the previous exmples you have already seen the `Box<T>` type being used.
+__Box\<T\>:__ In some of the previous examples you have already seen the `Box<T>` type being used.
 While being considered a smart pointer, a Box only provides rather simple functionality.
 A Box simply allows you to store data on the heap instead of the stack.
 In the previous examples this has been used to avoid copying of primitive types when transferring ownership.
 A more practical use case for a Box is to use it when you need to use a value of known size, while the size cannot be known at compile time.
 This might me the case if you need to use a recursive type, like a struct containing a value of itself as a field. 
-The following example does not comile, since the compiler assumes the worst: Option is never `None` so the size of `RecType` is infinite. 
+The following example does not compile, since the compiler assumes the worst: Option is never `None` so the size of `RecType` is infinite. 
 Rust knows your stack is not of infinite size and hints you in the right direction:
 
 ```rust
@@ -486,7 +486,7 @@ let r = RecType{next: Some(Box::new(RecType{next: None}))};
 ```
 
 Rust now knows the exact size of any `RecType` value.
-Because the Box is just a pointer to a location in the heap every `RecType` occupies exactly 8 Byte on the stack, the `RecType`s it points to are allocated on heap.
+Because the Box is just a pointer to a location in the heap, every `RecType` occupies exactly 8 Byte on the stack, the `RecType`s they point at are allocated on the heap.
 
 __Rc\<T\>:__ 
 
