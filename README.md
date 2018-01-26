@@ -12,9 +12,9 @@ Variables, Tuples, Functions, Blocks, Keywords (let, mut...), Macros
 Variables in Rust are by default immutable. To declare a mutable variable the `mut` keyword must be used:
 
 ```rust
-let var = 1;            //<= an immutable variable
-let mut var = 2;        //<= a mutable variable
-let var_u32: u32 = 1;   //<= a 32-bit unsigned integer
+let var = 1;            //an immutable variable
+let mut var = 2;        //a mutable variable
+let var_u32: u32 = 1;   //a 32-bit unsigned integer
 ```
 
 Since Rust is statically typed, the information about the data types must be available at compile time.
@@ -261,7 +261,7 @@ Rust provides memory safety without the need for a garbage collector.
 To achieve this, there are several rules in place as how you are allowed to use variables and references to those variables.
 
 If you take C for example, a language that also doesn't have garbage collection you can easily end up with a _dangling pointer_.
-A dangling pointer is a pointer, that points to a memory location that might already has been freed:
+A dangling pointer is a pointer, that points to a memory location that might already have been freed:
 
 ```c
 char* dangle() {
@@ -271,8 +271,8 @@ char* dangle() {
 }
 ```
 
-Even though modern compilers will warn you about returning the adress of stack memory this function would compile without errors.
-In Rust a similar program would not compile: 
+Even though modern compilers will warn you about returning the address of stack memory this function would compile whithout errors.
+In Rust a similar program would not compile, because the compiler has no way of knowing where the returned reference comes from and how long it is valid.
 
 ```rust 
 fn dangle() -> &str {
@@ -293,13 +293,13 @@ Take for example this piece of code:
 struct Car { model: String, year: u16 }
 
 fn main() {
-    let mut cars = vec![ //car get allocated
+    let mut cars = vec![ //cars gets allocated
         Car{model: "A4".to_string(), year: 2006}, 
         Car{model: "Clio".to_string(), year: 1998} ];
 } //cars gets dropped
 ```
-Since each value has a single owner, in this example each `Car` owns its fields which in turn own their values.
-`cars` own a vector which owns its elements of type `Car`.
+Since each value has a singe owner, in this example each `Car` owns its fields which in turn own their values.
+`cars` owns a vector which owns its elements of type `Car`.
 As soon as the vector leaves the scope every value associated with `cars` is _dropped_.
 Dropping a value means the memory associated with this value is freed.
 
@@ -319,7 +319,7 @@ In the following example we try to reassign a Box twice, which results in an err
 
 Moving the ownership of values to other variables is much cheaper than doing a deep copy of the values.
 It is also very clear to the program when it can clear the associated memory of a variable.
-To truly copy a value you have to explicitly copy them. 
+To truly copy a value you have to explicitly call clone on them. 
 In the example above the compiler error could be solved by calling `a.clone()` instead of a simple assignment.
 
 ### Moving on: moves in functions
@@ -488,8 +488,13 @@ let r = RecType{next: Some(Box::new(RecType{next: None}))};
 Rust now knows the exact size of any `RecType` value.
 Because the Box is just a pointer to a location in the heap, every `RecType` occupies exactly 8 Byte on the stack, the `RecType`s they point at are allocated on the heap.
 
-__Rc\<T\>:__ 
+__Rc\<T\>:__ The Reference Counted (Rc) pointer can also be used to allocate a value on the heap. 
+You may already be familiar with reference counted pointers from C++.
+In Rust they behave basically the same:
+A value pointed to by Rc is only then freed after there are no more references to it.
+This allows you to use a value that has been defined in a different scope:
 
-## Threads
+```rust 
+use std::rc::Rc;
 
 Closures, ownership in threads
