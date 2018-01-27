@@ -183,8 +183,6 @@ Stack unwinding wie c++ exception handling.
 Mehr zu drop in Ownership.
 Panic im main thread führt zu programmabsturz.
 
-Note: mehr zu Option gleich im Anschluss
-
 +++
 
 ## Option<T>
