@@ -166,6 +166,7 @@ How to panic! yourself:
 ```rust
 panic!("You should never have seen this!");
 ```
+@[1]()
 
 ## If a thread panics
 
