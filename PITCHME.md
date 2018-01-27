@@ -49,14 +49,14 @@ memory and type safety
 
 Easily create new projects:
 
-```bash
+```sh
 cargo new new_project
 cargo new new_bin_project --bin
 ```
 
 Generates completet project structure
 
-```bash
+```sh
 ├── Cargo.toml
 └── src
     └── lib.rs $or main.rs if created with --bin
