@@ -97,3 +97,50 @@ fn main() {
 +++
 
 # Type Safety
+
+- _Well defined_ programs don't exhibit unexpected behavior
+- _Type safe_ languages only allow well defined programs
+
+---
+
+## C example
+
+```c
+int main(void) {
+    unsigned long x[3];
+    x[3] = 0x0x7ffff7aaaaaa;
+}
+```
+
+@[2](Declare unsigned long array with length 3)
+@[3](Write to array index 3)
+@[1-4](Leads to undefined behavior, the value may or may not have been written)
+
+Note:
+Compiler Warnung, aber kein Fehler.
+Je Nach Ausführungsrechten an Speicher geschrieben
+
+---
+
+## Rust equivalent
+
+```rust
+fn main() {
+    let mut x: [u64; 3] = [1, 2, 3];
+    x[3] = 0x0x7ffff7aaaaaa;
+}
+```
+
+@[2](Declare u64 array with length 3)
+@[3](Write to array index 3)
+@[1-4](Thread main panics. Index out of bounds)
+
+Note:
+Uninitialisiertes array nicht erlaubt.
+Länge immer explizit angegeben.
+Panic bei nicht behebbaren Fehlern.
+
+---
+
+## Panic!
+
