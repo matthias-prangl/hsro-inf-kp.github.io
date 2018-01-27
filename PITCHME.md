@@ -306,7 +306,7 @@ fn some_fun(x: i32) -> i32 { x + 1 }
 let z = some_fun(10);
 ```
 
-@[2](Rust allows you to borrow values of any expression)
+@[8-9](Rust allows you to borrow values of any expression)
 Note: 
 References müssen immer initialisiert werden. (besipiel if let)
 References zeigen immer auf einen wert.
