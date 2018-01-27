@@ -6,52 +6,86 @@ memory and type safety
 
 ## Agenda
 
+- History
 - Basics
+- Cargo
 - Type Safety
 - Memory Safety
 - Ownership
-- References
+- Borrowing & References
 
 +++
 
 ## Agenda
 
-- Structs and Traits
-- Generics
-- Closures 
+- Lifetimes
+- Traits and Generics
+- Smart Pointers
+- Closures
 - Threads
 
 ---
 
-# Rust Basics
+## Rust Basics
 
 +++
 
-## Variables
-
-```rust
-let var = 1;
-let mut var = 2;
-let var_u32: u32 = 3;
-```
-
-+++
-
-## Functions
-
-```rust
-fn sum_fun(x: i32, y: i32) -> i32 {
-    x + y
-}
-```
-+++
-## Test 
-
-<img src="assets/simple_stack.png" height = "500">
-+++
-
-## Project Structure
+## Cargo
+- Rust package manager
+- Compiles the project
+- Creates Packages
 
 ---
+
+### Creating Projects
+
+Easily create new projects:
+
+```bash
+cargo new new_project
+cargo new new_bin_project --bin
+```
+
+Generates completet project structure
+
+```bash
+├── Cargo.toml
+└── src
+    └── lib.rs $or main.rs if created with --bin
+```
+
+---
+
+### Adding Depencies
+
+- Cargo.toml describes your dependencies.
+- Dependencies automatically downloaded and compiled
+
+```toml
+[package]
+name = "new_project"
+version = "0.1.0"
+authors = ["Matthias Prangl <matthias.prangl@gmail.com>"]
+
+[dependencies]
+rand = "0.4.2"
+```
+
+---
+
+### Using Dependencies
+
+```rust
+extern crate rand; //link the rand crate
+use rand::{thread_rng, Rng};
+
+fn main() {
+    let mut rng = thread_rng();
+    let random_number: u8 = rng.gen();
+    println!("{}", random_number);
+}
+```
+
++++
 
 # Type Safety
