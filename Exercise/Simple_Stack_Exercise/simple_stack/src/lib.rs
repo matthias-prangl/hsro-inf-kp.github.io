@@ -26,3 +26,6 @@ impl Stack {
         unimplemented!();
     }
 }
+
+//TODO: Implement Iterator for Stack
+// impl Iterator for Stack { }

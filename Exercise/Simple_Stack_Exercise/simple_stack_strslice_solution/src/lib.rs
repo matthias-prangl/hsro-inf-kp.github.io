@@ -23,7 +23,7 @@ impl<'a> Stack<'a> {
         self.first = new_elem;
     }
 
-    pub fn pop(&mut self) -> Option<&str> {
+    pub fn pop(&mut self) -> Option<&'a str> {
         match self.first.take() {
             Some(elem) => {
                 let ret_elem = *elem;
@@ -39,5 +39,12 @@ impl<'a> Stack<'a> {
         //     self.first = ret_elem.next;
         //     ret_elem.content
         // })
+    }
+}
+
+impl<'a> Iterator for Stack<'a> {
+    type Item = &'a str;
+    fn next(&mut self) -> Option<Self::Item> {
+        self.pop()
     }
 }

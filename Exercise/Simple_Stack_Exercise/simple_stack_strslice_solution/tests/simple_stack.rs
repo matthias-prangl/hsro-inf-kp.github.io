@@ -21,3 +21,17 @@ fn push_elems_test() {
     assert_eq!(stack.pop(), Some("hallo"));
     assert_eq!(stack.pop(), None);
 }
+
+#[test]
+fn iter_test() {
+    let mut stack = Stack::new();
+    stack.push("hallo");
+    stack.push("ciao");
+    stack.push("ahoj");
+    stack.push("今日は");
+    assert_eq!(stack.next(), Some("今日は"));
+    assert_eq!(stack.next(), Some("ahoj"));
+    assert_eq!(stack.next(), Some("ciao"));
+    assert_eq!(stack.next(), Some("hallo"));
+    assert_eq!(stack.next(), None);
+}

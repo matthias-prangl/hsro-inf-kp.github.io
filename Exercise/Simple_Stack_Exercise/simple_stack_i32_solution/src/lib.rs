@@ -41,3 +41,10 @@ impl Stack {
         // })
     }
 }
+
+impl Iterator for Stack {
+    type Item = i32;
+    fn next(&mut self) -> Option<i32> {
+        self.pop()
+    }
+}

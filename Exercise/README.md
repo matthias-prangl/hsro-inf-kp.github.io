@@ -19,6 +19,9 @@ It also gives you an idea of the fields in `Stack` and `StackElem`
 - To push an element on the stack the value in Stack itself needs to be changed
 - To pop an element off the stack you also need to change the value in Stack itself
 
+Additionally you can try to implement the required methods for the Iterator trait.
+You can look up the _Required Methods_ here: https://doc.rust-lang.org/std/iter/trait.Iterator.html
+
 ### Chaning the Simple Stack to take &str
 
 If your Stack is working and the tests have passed, you can try to change the type of the content from `i32` to `&str`.

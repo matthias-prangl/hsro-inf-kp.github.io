@@ -421,6 +421,7 @@ struct LifeStruct<'a> {
 struct LifeLifeStruct<'a> {
     life_struct: LifeStruct<'a>,
 }
+
 let life_struct = LifeStruct{ life_val: &1 };
 let life_life = LifeLifeStruct{ life_struct };
 ```
