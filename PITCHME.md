@@ -185,7 +185,7 @@ Panic im main thread führt zu programmabsturz.
 
 +++
 
-## Option\<T\>
+## Option&lt;T&gt;
 
 - For functions that may or may not return a value
 - enum containing either:
@@ -205,7 +205,7 @@ Option wichtig weil keine nullpointer erlaubt sind, mehr dazu in references.
 
 +++
 
-## Using Option\<T\>
+## Using Option&lt;T&gt;
 
 ```rust
 fn maybe_return_something(maybe: bool) -> Option<i32> {
@@ -244,7 +244,7 @@ Note: Take nützlich wichtig bei der großen Übung
 
 +++
 
-## Result\<T, E\>
+## Result&lt;T, E&gt;
 
 - For functions that return a value or produce an error.
 - Example: writing to a file
@@ -263,8 +263,9 @@ match write_to_file("file.txt", "TestText") {
 ```
 
 @[1](We only care if an error occured)
-@[2-3](? Operator propagates the error to the caller)
+@[2-3](? Operator propagates a possible error to the caller and exits the function)
 @[7-10](Print a possible error)
 
 Note: Mögliche Fehler: Datei nicht gefunden, keine schreibrechte,...
+Error propagation nur bei Funktionen die Result liefern.
 +++
