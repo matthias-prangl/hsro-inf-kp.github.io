@@ -81,7 +81,7 @@ The methods for the structs are implemented in an `impl` block.
 In the following example two methods for the above declared Student struct are implemented.
 A very basic `new` method creates a new value of type Student and returns the ownership to it.
 The `increase_sem` method takes the special argument `self` which is the value the method is called from.
-"self" is passed in as a reference, what is special about Rust references will be described later.
+`self` is passed in as a reference, what is special about Rust references will be described later.
 
 ```rust
 impl Student {
