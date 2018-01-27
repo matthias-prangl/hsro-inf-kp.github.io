@@ -35,6 +35,17 @@ memory and type safety
 - Compiles the project
 - Creates Packages
 
+<div class="twocolumn">
+  <div>
+    - Rust package manager </br>
+    - Compiles the project
+    - Creates Packages
+  </div>
+  <div>
+    <img src="https://github.com/matthias-prangl/rust/tree/master/assets/cargo_logo.png?raw=true" alt="cargo">
+  </div>
+</div>
+
 ---
 
 ### Creating Projects
