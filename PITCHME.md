@@ -268,4 +268,77 @@ match write_to_file("file.txt", "TestText") {
 
 Note: Mögliche Fehler: Datei nicht gefunden, keine schreibrechte,...
 Error propagation nur bei Funktionen die Result liefern.
+
+---
+
+# Borrowing & References
+
+Note: Nicht immer sinnvoll Ownership wegzugeben daher borrowing
+
++++
+
+## References
+
+- point to another value
+- non owning
+- creating a reference is borrowing
+- references cannot outlive their value
+
++++
+
+## References Example
+
+This will not compile:
+
+```rust 
+let x: &Vec<i32>;
+{
+    let v = vec![1, 2, 3];
+    x = &v;
+}
+```
+@[4-5](Vector v gets dropped while x still holds a reference to the vector)
+
+Note: 
+References müssen immer initialisiert werden. (besipiel if let)
+References ziegen immer auf einen wert.
+
++++
+
+## Mutable vs. Immutable References
+
+- Any number of immutable references to a value
+- Only a single mutable reference to a value at any time
+
+```rust
+let mut v = vec![1, 2, 3];
+let x = &mut v;
+```
+
+Note: 
+mutable borrow sehr ausführlich.
+Nur mutable variablen können mutable geliehen werden.
+
++++
+
+## References in Functions
+
+```rust 
+fn imm_ref(x: &Vec<i32>) {
+    println!("{:?}", x);
+}
+
+fn mut_ref(y: &mut Vec<i32>) {
+    y.push(2);
+    println!("{:?}", y);
+}
+
+let v1 = vec![1];
+imm_ref(&v1);
+let mut v2 = vec![1];
+mut_ref(&mut v2);
+```
+
+Note:
+automatisch dereferenziert :)
 +++
