@@ -28,7 +28,7 @@ memory and type safety
 
 ## Rust Basics
 
-+++
+---
 
 ## Cargo
 
@@ -43,7 +43,7 @@ memory and type safety
   </div>
 </div>
 
----
++++
 
 ### Creating Projects
 
@@ -62,7 +62,7 @@ Generates completet project structure
     └── lib.rs #or main.rs if created with --bin
 ```
 
----
++++
 
 ### Adding Depencies
 
@@ -79,7 +79,7 @@ authors = ["Matthias Prangl <matthias.prangl@gmail.com>"]
 rand = "0.4.2"
 ```
 
----
++++
 
 ### Using Dependencies
 
@@ -94,14 +94,17 @@ fn main() {
 }
 ```
 
-+++
+---
 
 # Type Safety
 
 - _Well defined_ programs don't exhibit unexpected behavior
 - _Type safe_ languages only allow well defined programs
 
----
+Note:
+Neben offensichtlichen Dingen wie checken ob String methode tatsächlich auf String aufgerufen.
+
++++
 
 ## C example
 
@@ -120,7 +123,7 @@ Note:
 Compiler Warnung, aber kein Fehler.
 Je Nach Ausführungsrechten an Speicher geschrieben
 
----
++++
 
 ## Rust equivalent
 
@@ -139,8 +142,9 @@ Note:
 Uninitialisiertes array nicht erlaubt.
 Länge immer explizit angegeben.
 Panic bei nicht behebbaren Fehlern.
+Panic ist definiertes Verhalten -> Type safe.
 
----
++++
 
 ## Panic!
 
