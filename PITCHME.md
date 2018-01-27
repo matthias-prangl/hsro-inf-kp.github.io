@@ -386,13 +386,14 @@ Note:
 einfaches beispiel; referenz auf ersten integer aus vektor.
 Lifetimes klar, da element aus vektor kommt.
 Lifetimes werden vom compiler abgeleitet.
-
+Usize nur um array zu indexieren, konsistenz mit nächstem beispiel.
 +++ 
 
 ## Lifetimes in functions
 
 ```rust
-fn get_elem<'a, 'b>(x: &'a Vec<usize>, y: &'b usize) -> Option<&'a usize> {
+fn get_elem<'a, 'b>(x: &'a Vec<usize>, y: &'b usize) 
+        -> Option<&'a usize> {
     if x.len() > *y {
         Some(&x[*y])
     } else {
@@ -405,7 +406,7 @@ get_elem(&Vec::new(), &1);
 Note: 
 Nicht mehr klar wo die rückgabereferenz herkommt.
 explizite angabe von lifetimes mit hochkomma.
-Dereferenzierung bei vergleich und index nötig, da entwickler zu faul.
+Dereferenzierung bei vergleich und index nötig, da nicht alle fälle für jeden typen implementiert.
 Funktion wird immernoch normal aufgerufen
 
 +++
@@ -420,15 +421,16 @@ struct LifeStruct<'a> {
 struct LifeLifeStruct<'a> {
     life_struct: LifeStruct<'a>,
 }
-
-let x = LifeLifeStruct{ life_struct: &LifeStruct{ life_val: &123}};
+let life_struct = LifeStruct{ life_val: &1 };
+let life_life = LifeLifeStruct{ life_struct };
 ```
 
 Note: 
 Immer dann nötig, wenn struct refernz enthält.
 Compiler kann prüfen, ob struct variable überlebt.
 Würde zu dangling pointer führen.
-
+Shorthand zum zuweisen in array.
+Wichtig für zweiten teil der stack übung.
 ---
 
 # Traits & Generics
