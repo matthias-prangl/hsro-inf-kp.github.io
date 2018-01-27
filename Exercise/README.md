@@ -1,5 +1,18 @@
 # Exercises
 
+In the virtual machine (password: rust) CLion and Visual Studio Code are provided and setup to complete the tasks.
+The preferred way is to use Visual Studio Code, but CLion provides some automatic type annotations.
+Feel free to not use the VM if you already have experience with Rust and have it setup on your notebook.
+
+**CLion:** Usually CLion uses CMake to build C Projects. 
+The IDE will show an error about not finding the CMakeLists.txt.
+Don't worry about it.
+Run the program or test it by pressing the little green run triangle next to the `main` method or next to a `test`.
+
+**Visual Studio Code:** You can call `cargo build` by pressing `Ctrl + Shift + P` and typing build.
+This will build the project associated with the currently opened file.
+To run the program or tests call `cargo run` or `cargo test` in the same way.
+
 
 ## Simple Stack
 
