@@ -3,5 +3,6 @@ logo : assets/fh-rosenheim.png
 slide-number : true
 transition : slide
 remote-control : true
+highlight : vs
 footnote : "Rust - Matthias Prangl - Richard Strauch"
 theme-override : assets/css/PITCHME.css
