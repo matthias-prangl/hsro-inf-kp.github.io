@@ -4,3 +4,4 @@ slide-number : true
 transition : slide
 remote-control : true
 footnote : "Rust - Matthias Prangl - Richard Strauch"
+theme-override : assets/css/PITCHME.css

@@ -39,7 +39,7 @@ memory and type safety
     - Creates Packages
   </div>
   <div>
-    <img src="assets/cargo_logo.png?raw=true" alt="cargo">
+    <img src="https://raw.githubusercontent.com/matthias-prangl/rust/master/assets/cargo_logo.png" alt="cargo">
   </div>
 </div>
 

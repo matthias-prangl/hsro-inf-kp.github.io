@@ -1,5 +1,4 @@
 title: "Rust - memory and type safety"
-baseurl: "https://matthias-prangl.github.io/rust"
 url: "https://matthias-prangl.github.io/rust"
 exclude: ["LICENSE", "Remarks.md"]
 github_username: ["matthias-prangl"]

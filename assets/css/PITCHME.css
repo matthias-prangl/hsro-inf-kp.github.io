@@ -1,0 +1,11 @@
+.reveal section img {
+    border: 0;
+    box-shadow: none;
+}
+
+.twocolumn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    text-align: center;
+  }
