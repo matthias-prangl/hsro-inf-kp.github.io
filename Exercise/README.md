@@ -21,7 +21,10 @@ It also gives you an idea of the fields in `Stack` and `StackElem`
 
 Additionally you can try to implement the required methods for the Iterator trait.
 On calling the required method, the iterator should simply pop off the first element.
-You can look up the _Required Methods_ here: https://doc.rust-lang.org/std/iter/trait.Iterator.html
+You can look up the _Required Methods_ here: https://doc.rust-lang.org/std/iter/trait.Iterator.html 
+In the implementation sekelton there is already the field `Item` which indicates the returned type of the iterator.
+
+To run the tests for the iterator you have to uncomment the tests in the `simple_stack/tests/simple_stack.rs` file.
 
 ### Chaning the Simple Stack to take &str
 
@@ -30,3 +33,5 @@ As you have learned in the lecture, a struct containing references needs explici
 
 By simply changing `i32` to `&str` you get a bunch of really helpful compiler errors. 
 Try to solve the exercise with those errors
+
+Here you also have to uncomment the tests in the `simple_stack/tests/simple_stack.rs`, and comment the tests using the integer simple_stack.

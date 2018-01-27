@@ -28,4 +28,6 @@ impl Stack {
 }
 
 //TODO: Implement Iterator for Stack
-// impl Iterator for Stack { }
+// impl Iterator for Stack { 
+//     type Item = i32;
+// }
