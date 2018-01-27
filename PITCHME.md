@@ -173,7 +173,7 @@ Panic macro änhnlich wie println mit argumenten.
 Keine exceptions in rust. (Ressourcenaufwand siehe z.b. c++ in msp430)
 +++
 
-## If a thread panics
+## In case a thread panics
 
 - An error message is printed
 - Temporary values, arguments and local variables are dropped. (Stack unwinding)
