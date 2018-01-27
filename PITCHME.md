@@ -156,17 +156,16 @@ Panic ist definiertes Verhalten -> Type safe.
 
 ## Panic!
 
+```rust
+panic!("You should never have seen this!");
+```
+
 Panics are for the kind of errors you can provide no solution for, like:
 - division by zero
 - assertion failures
 - unwrapping an Option containing None
 - out of bounds array access
 
-How to panic! yourself:
-```rust
-panic!("You should never have seen this!");
-```
-@[1]()
 
 ## If a thread panics
 
