@@ -156,7 +156,7 @@ Panic ist definiertes Verhalten -> Type safe.
 
 ## Panic!
 
-Panics are for the kind of errors that should never happen like:
+Panics are for the kind of errors you can provide no solution for, like:
 - division by zero
 - assertion failures
 - unwrapping an Option containing None
@@ -166,10 +166,6 @@ How to panic! yourself:
 ```rust
 panic!("You should never have seen this!");
 ```
-
-Note: 
-Panic macro änhnlich wie println mit argumenten.
-
 
 ## If a thread panics
 
@@ -230,7 +226,7 @@ match maybe_return_something() {
 The Option type provides some useful methods:
 
 ```rust
-let mut some_option = Some("Hello World 👽");
+let mut some_option: Option<&str> = Some("Hello World 👽");
 some_option.is_some();
 some_option.is_none();
 let another_option = some_option.take();
