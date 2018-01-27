@@ -118,7 +118,7 @@ There is no way for the program/compiler to check whether or not x[3] is part of
 ```c
 int main(void) {
     unsigned long x[3];
-    x[3] = 0x0x7ffff7aaaaaa;
+    x[3] = 0x7ffff7aaaaaa;
 }
 ```
 
@@ -138,7 +138,7 @@ Rust checks array bounds at run time:
 ```rust
 fn main() {
     let mut x: [u64; 3] = [1, 2, 3];
-    x[3] = 0x0x7ffff7aaaaaa;
+    x[3] = 0x7ffff7aaaaaa;
 }
 ```
 
@@ -169,7 +169,7 @@ panic!("You should never have seen this!");
 
 Note: 
 Panic macro änhnlich wie println mit argumenten.
-
+Keine exceptions in rust. (Ressourcenaufwand siehe z.b. c++ in msp430)
 +++
 
 ## If a thread panics
@@ -284,25 +284,33 @@ Note: Nicht immer sinnvoll Ownership wegzugeben daher borrowing
 - creating a reference is borrowing
 - references cannot outlive their value
 
+Note: 
+Referenzen 
 +++
 
-## References Example
-
-This will not compile:
+## References Examples
 
 ```rust 
+//this will not compile
 let x: &Vec<i32>;
 {
     let v = vec![1, 2, 3];
     x = &v;
 }
 ```
-@[4-5](Vector v gets dropped while x still holds a reference to the vector)
+@[5-6](Vector v gets dropped while x still holds a reference to the vector)
 
+```rust
+//borrowing the result of a function
+fn some_fun(x: i32) -> i32 { x + 1 }
+let z = some_fun(10);
+```
+
+@[2](Rust allows you to borrow values of any expression)
 Note: 
 References müssen immer initialisiert werden. (besipiel if let)
-References ziegen immer auf einen wert.
-
+References zeigen immer auf einen wert.
+Funktionsergebnisse können auch geliehen werden; bzw. alle Ausdrücke (z.B. ergebnis von match).
 +++
 
 ## Mutable vs. Immutable References
