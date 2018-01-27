@@ -2,14 +2,12 @@
 #[derive(Debug)]
 pub struct Stack {
     //a stack points to the first associated StackElem
-    unimplemented!();
 }
 
 #[derive(Debug)]
 struct StackElem {
     //a stack element needs some content 
     //and information about the following element
-    unimplemented!();
 }
 
 impl Stack {
