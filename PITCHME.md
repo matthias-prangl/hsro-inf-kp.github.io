@@ -109,6 +109,7 @@ fn main() {
 
 Note:
 Neben offensichtlichen Dingen wie checken ob String methode tatsächlich auf String aufgerufen.
+Type safety nicht nur bei statisch geschriebenen sprachen (z.B. python).
 
 +++
 
@@ -308,6 +309,7 @@ let z = some_fun(10);
 
 @[8-9](Rust allows you to borrow values of any expression)
 Note: 
+x könnte implizit typ ableiten, veranschaulichung.
 References müssen immer initialisiert werden. (besipiel if let)
 References zeigen immer auf einen wert.
 Funktionsergebnisse können auch geliehen werden; bzw. alle Ausdrücke (z.B. ergebnis von match).
@@ -349,4 +351,94 @@ mut_ref(&mut v2);
 
 Note:
 automatisch dereferenziert :)
+
+---
+
+# Exercise
+
+---
+
+# Lifetimes
+
+Note:
+Geben an wie lange ein wert lebt.
+Durch fehlenden Garbage collector in Rust nötig.
+
 +++
+
+## Where are Lifetimes necessary?
+
+- In functions that return references
+- In structs with references as fields
+- Help the compiler decide if a reference outlives its value
+
+```rust
+fn get_frist(x: &Vec<usize>) -> Option<&usize> {
+    if x.len() > 0 {
+        Some(&x[0])
+    } else {
+        None
+    }
+}
+```
+
+Note:
+einfaches beispiel; referenz auf ersten integer aus vektor.
+Lifetimes klar, da element aus vektor kommt.
+Lifetimes werden vom compiler abgeleitet.
+
++++ 
+
+## Lifetimes in functions
+
+```rust
+fn get_elem<'a, 'b>(x: &'a Vec<usize>, y: &'b usize) -> Option<&'a usize> {
+    if x.len() > *y {
+        Some(&x[*y])
+    } else {
+        None
+    }
+}
+get_elem(&Vec::new(), &1);
+```
+
+Note: 
+Nicht mehr klar wo die rückgabereferenz herkommt.
+explizite angabe von lifetimes mit hochkomma.
+Dereferenzierung bei vergleich und index nötig, da entwickler zu faul.
+Funktion wird immernoch normal aufgerufen
+
+## Lifetimes in structs
+
+```rust
+struct LifeStruct<'a> {
+    life_val: &'a i32,
+}
+
+struct LifeLifeStruct<'a> {
+    life_struct: LifeStruct<'a>,
+}
+
+let x = LifeLifeStruct{ life_struct: &LifeStruct{ life_val: &123}};
+```
+
+Note: 
+Immer dann nötig, wenn struct refernz enthält.
+Compiler kann prüfen, ob struct variable überlebt.
+Würde zu dangling pointer führen.
+
+---
+
+# Traits & Generics
+
+---
+
+# Closures
+
+---
+
+# Threads
+
+---
+
+# Exercise
