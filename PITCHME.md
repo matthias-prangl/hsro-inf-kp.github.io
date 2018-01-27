@@ -26,22 +26,25 @@ memory and type safety
 
 ---
 
-## Rust Basics
+# Rust Basics
 
 ---
 
-## Cargo
+# Cargo
 
 <div class="twocolumn">
   <div>
     - Rust package manager </br>
-    - Compiles the project </br>
+    - Invokes rustc to compile </br>
     - Creates Packages
   </div>
   <div>
     <img src="https://raw.githubusercontent.com/matthias-prangl/rust/master/assets/cargo_logo.png" alt="cargo">
   </div>
 </div>
+
+Note:
+Packages availiable at crates.io
 
 +++
 
@@ -83,8 +86,10 @@ rand = "0.4.2"
 
 ### Using Dependencies
 
+Using the rand crate to print a random number
+
 ```rust
-extern crate rand; //link the rand crate
+extern crate rand;
 use rand::{thread_rng, Rng};
 
 fn main() {
@@ -93,7 +98,8 @@ fn main() {
     println!("{}", random_number);
 }
 ```
-
+@[1](link the rand crate to the project)
+@[2](bring used members in scope)
 ---
 
 # Type Safety
@@ -106,8 +112,9 @@ Neben offensichtlichen Dingen wie checken ob String methode tatsächlich auf Str
 
 +++
 
-## C example
+## Undefined behavior in C
 
+There is no way for the program/compiler to check whether or not x[3] is part of the array:
 ```c
 int main(void) {
     unsigned long x[3];
@@ -127,6 +134,7 @@ Je Nach Ausführungsrechten an Speicher geschrieben
 
 ## Rust equivalent
 
+Rust checks array bounds at run time:
 ```rust
 fn main() {
     let mut x: [u64; 3] = [1, 2, 3];
@@ -148,3 +156,93 @@ Panic ist definiertes Verhalten -> Type safe.
 
 ## Panic!
 
+Panics are for the kind of errors that should never happen like:
+- division by zero
+- assertion failures
+- unwrapping an Option containing None
+- out of bounds array access
+
+How to panic! yourself:
+```rust
+panic!("You should never have seen this!");
+```
+
+Note: 
+Panic macro änhnlich wie println mit argumenten.
+
+
+## If a thread panics
+
+- An error message is printed
+- Temporary values, arguments and local variables are dropped. (Stack unwinding)
+- The panicking thread exits
+
+Note: 
+Stack unwinding wie c++ exception handling. 
+Mehr zu drop in Ownership.
+Panic im main thread führt zu programmabsturz.
+
+Note: mehr zu Option gleich im Anschluss
+
++++
+
+## Option<T>
+
+- For functions that may or may not return a value
+- enum containing either:
+    -  some value of type T (Some<T>)
+    -  No value (None)
+
+```rust
+enum Option<T> {
+    Some<T>,
+    None,
+}
+```
+
+Note: 
+Genutzt bei z.B. 
+Option wichtig weil keine nullpointer erlaubt sind, mehr dazu in references.
+
++++
+
+## Using Option<T>
+
+```rust
+fn maybe_return_something(maybe: bool) -> Option<i32> {
+    match maybe {
+        true => Some(123),
+        false => None,
+    }
+}
+
+match maybe_return_something() {
+    Some(val) => println!("I got: {}", val),
+    None => println!("I got nothing!"),
+}
+```
+
+@[8-11](Match on the returned Option and do something with the result)
++++
+
+## Methods for Option<T>
+
+The Option type provides some useful methods:
+
+```rust
+let mut some_option = Some("Hello World 👽");
+some_option.is_some();
+some_option.is_none();
+let another_option = some_option.take();
+some_option.unwrap();
+```
+
+@[2-3](Check if the Option is some or none and return true/false)
+@[4](Return Some from the Option and replace it with none)
+@[5](Unwrap the Option, yielding Some<T>. Don't do this! Panics if Option was None)
+
++++
+
+## Result<T, E>
+
++++
