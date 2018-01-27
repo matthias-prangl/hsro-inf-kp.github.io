@@ -31,18 +31,15 @@ memory and type safety
 +++
 
 ## Cargo
-- Rust package manager
-- Compiles the project
-- Creates Packages
 
 <div class="twocolumn">
   <div>
     - Rust package manager </br>
-    - Compiles the project
+    - Compiles the project </br>
     - Creates Packages
   </div>
   <div>
-    <img src="https://github.com/matthias-prangl/rust/tree/master/assets/cargo_logo.png?raw=true" alt="cargo">
+    <img src="assets/cargo_logo.png?raw=true" alt="cargo">
   </div>
 </div>
 
