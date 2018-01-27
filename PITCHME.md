@@ -370,7 +370,7 @@ Durch fehlenden Garbage collector in Rust nötig.
 
 - In functions that return references
 - In structs with references as fields
-- Help the compiler decide if a reference outlives its value
+- Lifetimes help the compiler decide if a reference outlives its value
 
 ```rust
 fn get_frist(x: &Vec<usize>) -> Option<&usize> {
@@ -407,6 +407,8 @@ Nicht mehr klar wo die rückgabereferenz herkommt.
 explizite angabe von lifetimes mit hochkomma.
 Dereferenzierung bei vergleich und index nötig, da entwickler zu faul.
 Funktion wird immernoch normal aufgerufen
+
++++
 
 ## Lifetimes in structs
 
