@@ -613,7 +613,7 @@ Arc auch verfügbar (atomic rc), für multithreading, rc mit overhead (langsamer
 
 ## Closures
 
-- Anonymus functions
+- Anonymous functions
 - A little different in Rust
 - Can move, borrow or mutate values
 
@@ -629,18 +629,18 @@ Note: sollte man schon aus java, c++, python etc. kennen
 ```rust 
 let mut v = vec!["Hello", "closure!"];
 let closure = || println!("{}", v[0]);
-let closure_once = move || println!("{}", v[0]);
+let closure_once = move || {
+        for i in v { println!("{}", i) }
+    };
 let mut closure_mut = || v.push("Hi!");
 
-fn closure_fun<F>(c: F) where F: FnOnce()->() {
-    c(); c();
-}
+fn closure_fun<F>(c: F) where F: FnOnce()->() { c(); c(); }
 ```
 
 @[2](Fn()->() can be called any number of times)
-@[3](FnOnce()->() can only be called once)
-@[4](FnMut()->() mutates the value in the closure)
-@[6-8](This will not work, since FnOnce can only be called once)
+@[3-5](FnOnce()->() can only be called once)
+@[6](FnMut()->() mutates the value in the closure)
+@[8](This will not work, since FnOnce can only be called once)
 
 Note: Fn, FnOnce, FnMut sind automatisch implementierte traits
 Beispiel kompiliert NICHT.
