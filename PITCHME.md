@@ -373,7 +373,7 @@ Durch fehlenden Garbage collector in Rust nötig.
 - Lifetimes help the compiler decide if a reference outlives its value
 
 ```rust
-fn get_frist(x: &Vec<usize>) -> Option<&usize> {
+fn get_frist<'a>(x: &'a Vec<usize>) -> Option<&'a usize> {
     if x.len() > 0 {
         Some(&x[0])
     } else {
@@ -385,7 +385,7 @@ fn get_frist(x: &Vec<usize>) -> Option<&usize> {
 Note:
 einfaches beispiel; referenz auf ersten integer aus vektor.
 Lifetimes klar, da element aus vektor kommt.
-Lifetimes werden vom compiler abgeleitet.
+Lifetimes werden vom compiler abgeleitet, können weggelassen werden.
 Usize nur um array zu indexieren, konsistenz mit nächstem beispiel.
 +++ 
 
@@ -406,7 +406,7 @@ get_elem(&Vec::new(), &1);
 Note: 
 Nicht mehr klar wo die rückgabereferenz herkommt.
 explizite angabe von lifetimes mit hochkomma.
-Dereferenzierung bei vergleich und index nötig, da nicht alle fälle für jeden typen implementiert.
+Dereferenzierung bei vergleich und index nötig, da nicht alle fälle für jeden typen implementiert (&i32 == i32, &mut i32 == i32, ....) einfacher dereferenzierung zu verlangen.
 Funktion wird immernoch normal aufgerufen
 
 +++
@@ -428,6 +428,7 @@ let life_life = LifeLifeStruct{ life_struct };
 
 Note: 
 Immer dann nötig, wenn struct refernz enthält.
+Auch dann nötig, wenn struct mit lifetime feld ist.
 Compiler kann prüfen, ob struct variable überlebt.
 Würde zu dangling pointer führen.
 Shorthand zum zuweisen in array.
@@ -435,6 +436,96 @@ Wichtig für zweiten teil der stack übung.
 ---
 
 # Traits & Generics
+
++++
+
+## Traits
+
+- Zero cost abstraction
+- _Interfaces_ in Rust
+- Statically dispached
+- Dynamically dispached
+- Used for generics
+- Can be added to **any** type
+
+Note: 
+ZCA: geschwindigkeit, speicher, gleich wenn abstrahiert.
+Interfaces aus Java bekannt.
+Static: Generics werden wegkompiliert; laufzeit verbessert.
+Dynamic: für dinge wie button callbacks (u.U. variable größe) wirds abstrakt behalten.
+Trait bounds geben an welche Traits erwartet werden.
+Kann auch zu z.B. i32 hinzugefügt werden.
+
++++
+
+## Trait Example
+
+```rust 
+struct Fib { next: i32, curr: i32, }
+
+impl Iterator for Fib {
+    type Item = i32;
+    fn next(&mut self) -> Option<Self::Item> {
+        let new_next = self.curr + self.next;
+        self.curr = self.next;
+        self.next = new_next;
+        Some(self.curr)
+    }
+}
+```
+@[1](Definition of a new struct)
+@[3](Implementation block for the Iterator trait)
+@[4-5](Required items to implement the iterator)
+
+Note:
+Fib kann nun alle Iterator methoden ausführen.
+Darunter take, umwandlung in peekable, ...
+
++++
+
+## Using Traits
+
+```rust
+trait AwesomeTrait {
+    fn default_method(&self) { println!("Wow!"); }
+    fn required_method(&self);
+}
+
+impl AwesomeTrait for i32 {
+    fn required_method(&self) {
+        println!("I am special!");
+    }
+}
+
+fn generic_fun<T: AwesomeTrait>(y: T) {
+    y.default_method();
+    y.required_method();
+}
+```
+
+Note:
+Traits mit default methoden bereits implementiert.
+Andere methoden müssen von implementierenden typen implementiert werden.
+Einfach für bestehende Datentypen implementierbar.
+
++++
+
+## Trait bounds
+
+```rust
+fn trait_fun<'a, 'b, T: std::fmt::Debug, U: Iterator, V: std::ops::Add>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
+{ y }
+
+fn trait_fu2n<'a, 'b, T, U, V>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
+    where T: std::fmt::Debug, U: Iterator, V: std::ops::Add 
+{ y }
+```
+Note: Verschiedene Notationen, damit parameter und reutrn nicht zu weit weg rücken.
+Bei simplen implementierungen nicht nötig.
+Unübersichtlich bei vielen generics.
+---
+
+# Smart Pointers
 
 ---
 
