@@ -542,7 +542,9 @@ Note:
 Referenzen sind quasi schon Smarte pointer wie in C++.
 Durch Ownership gestärkt.
 
-## Box&lt;T&gt
++++
+
+## Box&lt;T&gt;
 
 ```rust
 struct RecStruct {
@@ -562,7 +564,7 @@ let r = ActualRecStruct{ rec: Box::new(ActualRecStruct { rec: ... })};
 
 +++
 
-## Rc&lt;T&gt
+## Rc&lt;T&gt;
 
 - Reference counted smart pointer
 - Share immutable data
