@@ -481,11 +481,11 @@ struct LifeLifeStruct<'a> {
 }
 ```
 In the example a struct `LifeStruct` containing a reference is declared.
-Any implementation for this struct has to provice appropiate lifetimes. 
-The `new` function can derive the appropiate lifetime as shown before, but you are also allowed to aplicitly annotate them if this makes things more clear.
+Any implementation for this struct has to provide appropiate lifetimes. 
+The `new` function can derive the appropiate lifetime as shown before, but you are also allowed to explicitly annotate them if this makes things more clear for you.
 
-In the struct `LifeLifeStruct` you can see that even though the field `life_struct` is not a reference, we have to provide the lifetimes.
-If we would omit the lifetime parameters, the compiler would have no way to know how long the reference inside the field `life_struct` lives.
+In the struct `LifeLifeStruct` you can see that even though the field `life_struct` is not a reference, we have to provide a lifetime for it.
+If we would omit the lifetime parameters, the compiler would have no way of knowing how long the reference inside the field `life_struct` lives.
 
 ## Smart pointers
 
