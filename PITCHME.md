@@ -516,16 +516,77 @@ Einfach für bestehende Datentypen implementierbar.
 fn trait_fun<'a, 'b, T: std::fmt::Debug, U: Iterator, V: std::ops::Add>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
 { y }
 
-fn trait_fu2n<'a, 'b, T, U, V>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
+fn trait_fun<'a, 'b, T, U, V>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
     where T: std::fmt::Debug, U: Iterator, V: std::ops::Add 
 { y }
 ```
+
+@[5](Define the trait bounds after the return value to make things more clear)
+
 Note: Verschiedene Notationen, damit parameter und reutrn nicht zu weit weg rücken.
 Bei simplen implementierungen nicht nötig.
 Unübersichtlich bei vielen generics.
 ---
 
 # Smart Pointers
+
++++
+
+## Why though?
+
+- Explicitly allocate a value on the heap
+- Shared ownership (across threads)
+- Added indirection
+
+Note:
+Referenzen sind quasi schon Smarte pointer wie in C++.
+Durch Ownership gestärkt.
+
+## Box&lt;T&gt
+
+```rust
+struct RecStruct {
+    rec: RecStruct,
+}
+
+struct ActualRecStruct{
+    rec: Box<ActualRecStruct>,
+}
+
+let r = ActualRecStruct{ rec: Box::new(ActualRecStruct { rec: ... })};
+```
+
+@[1-3](Doesn't work, RecStruct has infinite size on the stack)
+@[5-7](Added indirection through Box, size on stack is known)
+@[5-9](Actually still infinite size, put the Box in an Option!)
+
++++
+
+## Rc&lt;T&gt
+
+- Reference counted smart pointer
+- Share immutable data
+- Value dropped if no more reference to value
+
+```rust
+use std::rc::Rc;
+
+let x; 
+{
+    let y = Rc::new("Share me");
+    x = Rc::clone(&y);
+}
+println!("{}", x);
+```
+
+@[1](Bring Rc in scope)
+@[3-8](Would not be possible without Rc. y is dropped after inner scope)
+
+Note: definiere y als rc.
+Explizites aufrufen von rc::clone.
+Normale Referenzen: borrowed value does not live long enough.
+Mutable Rc auch möglich durch cell, geht hier zu weit.
+Arc auch verfügbar (atomic rc), für multithreading, rc mit overhead (langsamer)
 
 ---
 
