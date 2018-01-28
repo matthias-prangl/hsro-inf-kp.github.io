@@ -13,6 +13,7 @@ memory and type safety
 - Memory Safety
 - Ownership
 - Borrowing & References
+- Exercise
 
 +++
 
@@ -23,6 +24,7 @@ memory and type safety
 - Smart Pointers
 - Closures
 - Threads
+- Exercise
 
 ---
 
@@ -269,6 +271,7 @@ match write_to_file("file.txt", "TestText") {
 
 Note: Mögliche Fehler: Datei nicht gefunden, keine schreibrechte,...
 Error propagation nur bei Funktionen die Result liefern.
+Hinweis auf expect() liefert ok, panic bei E.
 
 ---
 
@@ -605,6 +608,43 @@ Arc auch verfügbar (atomic rc), für multithreading, rc mit overhead (langsamer
 ---
 
 # Closures
+
++++
+
+## Closures
+
+- Anonymus functions
+- A little different in Rust
+- Can move, borrow or mutate values
+
+Note: sollte man schon aus java, c++, python etc. kennen
+
++++
+
+## Closure examples
+
+- Three different kinds of closures
+- Can be used as parameters in functions
+
+```rust 
+let mut v = vec!["Hello", "closure!"];
+let closure = || println!("{}", v[0]);
+let closure_once = move || println!("{}", v[0]);
+let mut closure_mut = || v.push("Hi!");
+
+fn closure_fun<F>(c: F) where F: FnOnce()->() {
+    c(); c();
+}
+```
+
+@[2](Fn()->() can be called any number of times)
+@[3](FnOnce()->() can only be called once)
+@[4](FnMut()->() mutates the value in the closure)
+@[6-8](This will not work, since FnOnce can only be called once)
+
+Note: Fn, FnOnce, FnMut
+Beispiel komiliert NICHT.
+Auch als Funktionsparameter möglich.
 
 ---
 
