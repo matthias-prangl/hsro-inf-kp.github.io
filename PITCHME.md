@@ -642,9 +642,11 @@ fn closure_fun<F>(c: F) where F: FnOnce()->() {
 @[4](FnMut()->() mutates the value in the closure)
 @[6-8](This will not work, since FnOnce can only be called once)
 
-Note: Fn, FnOnce, FnMut
-Beispiel komiliert NICHT.
+Note: Fn, FnOnce, FnMut sind automatisch implementierte traits
+Beispiel kompiliert NICHT.
+v muss zwingend mut sein wenn closure_mut funktionieren soll.
 Auch als Funktionsparameter möglich.
+Jede Fn ist FnMut ist FnOnce.
 
 ---
 
