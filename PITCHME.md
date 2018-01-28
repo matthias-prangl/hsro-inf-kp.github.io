@@ -38,7 +38,7 @@ memory and type safety
   <div>
     - Rust package manager </br>
     - Invokes rustc to compile </br>
-    - Creates Packages
+    - Creates packages
   </div>
   <div>
     <img src="https://raw.githubusercontent.com/matthias-prangl/rust/master/assets/cargo_logo.png" alt="cargo">
@@ -46,8 +46,8 @@ memory and type safety
 </div>
 
 Note:
-Packages availiable at crates.io
-
+Packages availiable at crates.io.
+Rust eher bare bones, daher viele crates verfügbar
 +++
 
 ### Creating Projects
@@ -192,7 +192,7 @@ Panic im main thread führt zu programmabsturz.
 
 - For functions that may or may not return a value
 - enum containing either:
-    -  some value of type T (Some<T>)
+    -  Some value of type T (Some&lt;T&gt;)
     -  No value (None)
 
 ```rust
@@ -227,7 +227,7 @@ match maybe_return_something() {
 @[8-11](Match on the returned Option and do something with the result)
 +++
 
-## Methods for Option<T>
+## Methods for Option&lt;T&gt;
 
 The Option type provides some useful methods:
 
@@ -514,7 +514,7 @@ Note:
 Traits mit default methoden bereits implementiert.
 Andere methoden müssen von implementierenden typen implementiert werden.
 Einfach für bestehende Datentypen implementierbar.
-
+Trait objects auch möglich, meist geboxed, wg. variabler größe.
 +++
 
 ## Trait bounds
@@ -567,11 +567,18 @@ struct ActualRecStruct{
 }
 
 let r = ActualRecStruct{ rec: Box::new(ActualRecStruct { rec: ... })};
+
+fn do_something(v: Vec<i32>) { }
+let v = Box::new(Vec[123, 234]);
+do_something(*v)
 ```
 
 @[1-3](Doesn't work, RecStruct has infinite size on the stack)
 @[5-7](Added indirection through Box, size on stack is known)
 @[5-9](Actually still infinite size, put the Box in an Option!)
+@[11-13](Dereference a box using *)
+
+Note: Dereferenzierung mit stern, normalerweise nicht benötigt aber z.b. bei zuweisung
 
 +++
 
@@ -651,6 +658,9 @@ Jede Fn ist FnMut ist FnOnce.
 ---
 
 # Threads
+
+Note: gibts auch.
+Komfortable möglichkeiten für mutexe, channels, atomic reference counted immutable variablen
 
 ---
 
