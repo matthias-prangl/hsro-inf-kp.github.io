@@ -7,8 +7,6 @@ This blog will give you an overview over the language and addresses some of the 
 
 ## Basic Syntax
 
-Variables, Tuples, Functions, Blocks, Keywords (let, mut...), Macros
-
 Variables in Rust are by default immutable. To declare a mutable variable the `mut` keyword must be used:
 
 ```rust
