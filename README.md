@@ -460,6 +460,33 @@ You can, of course, explicitly annotate the lifetimes anyway:
 fn string<'a>(s: &'a str, until usize) -> &'a str { s[0..until] }
 ```
 
+### Lifetimes in Structs
+
+In case you want to use a reference as a field in a struct you also need to explicitly annotate the lifetime.
+This ensures that a struct is not used after the location a field points to has been freed.
+
+```rust
+struct LifeStruct<'a> {
+    life_val: &'a str,
+}
+
+impl<'a> LifeStruct<'a> {
+    fn new(life_val: &str) -> LifeStruct {
+        LifeStruct{ life_val }
+    }
+}
+
+struct LifeLifeStruct<'a> {
+    life_struct: LifeStruct<'a>,
+}
+```
+In the example a struct `LifeStruct` containing a reference is declared.
+Any implementation for this struct has to provice appropiate lifetimes. 
+The `new` function can derive the appropiate lifetime as shown before, but you are also allowed to aplicitly annotate them if this makes things more clear.
+
+In the struct `LifeLifeStruct` you can see that even though the field `life_struct` is not a reference, we have to provide the lifetimes.
+If we would omit the lifetime parameters, the compiler would have no way to know how long the reference inside the field `life_struct` lives.
+
 ## Smart pointers
 
 __Box\<T\>:__ In some of the previous examples you have already seen the `Box<T>` type being used.
