@@ -272,6 +272,10 @@ Error propagation nur bei Funktionen die Result liefern.
 
 ---
 
+# Ownership
+
+---
+
 # Borrowing & References
 
 Note: Nicht immer sinnvoll Ownership wegzugeben daher borrowing
@@ -304,7 +308,7 @@ let x: &Vec<i32>;
 ```rust
 //borrowing the result of a function
 fn some_fun(x: i32) -> i32 { x + 1 }
-let z = some_fun(10);
+let z = &some_fun(10);
 ```
 
 @[8-9](Rust allows you to borrow values of any expression)
@@ -512,6 +516,9 @@ Einfach für bestehende Datentypen implementierbar.
 
 ## Trait bounds
 
+- Define which traits a parameter has to implement
+- Multiple traits possible
+
 ```rust
 fn trait_fun<'a, 'b, T: std::fmt::Debug, U: Iterator, V: std::ops::Add>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
 { y }
@@ -524,6 +531,7 @@ fn trait_fun<'a, 'b, T, U, V>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
 @[5](Define the trait bounds after the return value to make things more clear)
 
 Note: Verschiedene Notationen, damit parameter und reutrn nicht zu weit weg rücken.
+
 Bei simplen implementierungen nicht nötig.
 Unübersichtlich bei vielen generics.
 ---
@@ -577,15 +585,19 @@ let x;
 {
     let y = Rc::new("Share me");
     x = Rc::clone(&y);
+    println!("{}", Rc::strong_count(&x));
 }
+println!("{}", Rc::strong_count(&x));
 println!("{}", x);
 ```
 
 @[1](Bring Rc in scope)
-@[3-8](Would not be possible without Rc. y is dropped after inner scope)
+@[7-9](Get owning references count)
+@[3-10](Would not be possible without Rc. y is dropped after inner scope)
 
 Note: definiere y als rc.
 Explizites aufrufen von rc::clone.
+Weak count wäre auch möglich; non owning, wird None wenn dropped.
 Normale Referenzen: borrowed value does not live long enough.
 Mutable Rc auch möglich durch cell, geht hier zu weit.
 Arc auch verfügbar (atomic rc), für multithreading, rc mit overhead (langsamer)
