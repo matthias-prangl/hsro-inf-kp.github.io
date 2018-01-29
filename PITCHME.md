@@ -279,12 +279,29 @@ Hinweis auf expect() liefert ok, panic bei E.
 # Memory Safety
 
 +++
+- Rust provides memory safety without the need for a garbage collector. 
 - The system is designed to be memory safe, and it does not permit null pointers, dangling pointers, or data races in safe code.
 - Rust core library provides an option type, which can be used to test if a pointer has Some value or None
 - Rust also introduces additional syntax to manage lifetimes, and the compiler reasons about these through its borrow checker.
 ---
 
 # Ownership
++++
+- Variable bindings (let) have a property in Rust: they have ownership of what they are bound to
+- When a binding goes out of scope, Rust will free the bound resources
+- Happens deterministically at the end of the scope
+- The ownership system is a prime example of a zero-cost abstraction. 
+- Things will be done at compile time, no losses at runtime 
+
++++
+## Ownership and Moves
+
+- Variables are in charge of freeing their own resources
+- Thats why resources can only have one owner
+- Prevents resources being released more than once
+- Note that not all variables own resources (e.g. references)
+- Assignments (let x=y) or passing function arguments by value (foo(x)) transfers the ownership
+
 +++
 <div class="twocolumn">
   <div>
