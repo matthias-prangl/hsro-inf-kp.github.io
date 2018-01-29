@@ -218,7 +218,7 @@ fn maybe_return_something(maybe: bool) -> Option<i32> {
     }
 }
 
-match maybe_return_something() {
+match maybe_return_something(true) {
     Some(val) => println!("I got: {}", val),
     None => println!("I got nothing!"),
 }
@@ -271,7 +271,12 @@ match write_to_file("file.txt", "TestText") {
 
 Note: Mögliche Fehler: Datei nicht gefunden, keine schreibrechte,...
 Error propagation nur bei Funktionen die Result liefern.
+() ist leerer typ, wenn result nicht interessant.
 Hinweis auf expect() liefert ok, panic bei E.
+
+---
+
+# Memory Safety
 
 ---
 
@@ -355,6 +360,9 @@ imm_ref(&v1);
 let mut v2 = vec![1];
 mut_ref(&mut v2);
 ```
+
+@[1-3, 10-11](Immutable reference as parameter)
+@[5-8, 12-13](Mutable reference as parameter, very verbose)
 
 Note:
 automatisch dereferenziert :)
@@ -523,11 +531,12 @@ Trait objects auch möglich, meist geboxed, wg. variabler größe.
 - Multiple traits possible
 
 ```rust
-fn trait_fun<'a, 'b, T: std::fmt::Debug, U: Iterator, V: std::ops::Add>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
+use std::fmt::Debug;
+fn trait_fun<'a, 'b, T: Debug + Iterator, U: Iterator, V: std::ops::Add>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
 { y }
 
 fn trait_fun<'a, 'b, T, U, V>(w: T, x: &'a U, y: &'b U, z: V) -> &'b U
-    where T: std::fmt::Debug, U: Iterator, V: std::ops::Add 
+    where T: Debug + Iterator, U: Iterator, V: std::ops::Add 
 { y }
 ```
 
@@ -651,6 +660,7 @@ fn closure_fun<F>(c: F) where F: FnOnce()->() { c(); c(); }
 
 Note: Fn, FnOnce, FnMut sind automatisch implementierte traits
 Beispiel kompiliert NICHT.
+move könnte weggelassen werden, explizite übertragung des ownership.
 v muss zwingend mut sein wenn closure_mut funktionieren soll.
 Auch als Funktionsparameter möglich.
 Jede Fn ist FnMut ist FnOnce.
