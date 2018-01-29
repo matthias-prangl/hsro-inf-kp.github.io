@@ -278,10 +278,25 @@ Hinweis auf expect() liefert ok, panic bei E.
 
 # Memory Safety
 
++++
+- The system is designed to be memory safe, and it does not permit null pointers, dangling pointers, or data races in safe code.
+- Rust core library provides an option type, which can be used to test if a pointer has Some value or None
+- Rust also introduces additional syntax to manage lifetimes, and the compiler reasons about these through its borrow checker.
 ---
 
 # Ownership
-
++++
+<div class="twocolumn">
+  <div>
+    - Rust package manager </br>
+    - Invokes rustc to compile </br>
+    - Creates packages
+  </div>
+  <div>
+    <img src="https://raw.githubusercontent.com/matthias-prangl/rust/master/assets/strings_in_memory.PNG" alt="cargo">
+  <img src="https://raw.githubusercontent.com/matthias-prangl/rust/master/assets/move_string_in_memory.PNG" alt="cargo">
+  </div>
+</div>
 ---
 
 # Borrowing & References
