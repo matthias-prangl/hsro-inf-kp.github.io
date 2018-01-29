@@ -1,0 +1,6 @@
+[package]
+name = "trait_exercise"
+version = "0.1.0"
+authors = ["Matthias Prangl <matthias.prangl@gmail.com>"]
+
+[dependencies]
