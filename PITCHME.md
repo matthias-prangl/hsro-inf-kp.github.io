@@ -298,7 +298,11 @@ Note: Nicht immer sinnvoll Ownership wegzugeben daher borrowing
 - references cannot outlive their value
 
 Note: 
-Referenzen 
+Einfache Adressen auf speicher
+Im gegensatz zu c++ (implizit) explizit erstellt.
+int x = 7;
+int &y = x;
+Referenzen auf referenzen erlaubt!
 +++
 
 ## References Examples
@@ -340,6 +344,7 @@ let x = &mut v;
 Note: 
 mutable borrow sehr ausführlich.
 Nur mutable variablen können mutable geliehen werden.
+Multiple Reader/Single Writer (z.b. Datenstrukturen die dynamisch allozieren vec,...)
 
 +++
 

@@ -4,10 +4,8 @@ In the virtual machine (password: rust) CLion and Visual Studio Code are provide
 The preferred way is to use Visual Studio Code, but CLion provides some automatic type annotations.
 Feel free to not use the VM if you already have experience with Rust and have it setup on your notebook.
 
-**CLion:** Usually CLion uses CMake to build C Projects. 
-The IDE will show an error about not finding the CMakeLists.txt.
-Don't worry about it.
-Run the program or test it by pressing the little green run triangle next to the `main` method or next to a `test`.
+**CLion:** _This might be very slow in Virtual Box!_ 
+Usually CLion uses CMake to build C Projects. The IDE will show an error about not finding the CMakeLists.txt. Don't worry about it. Run the program or test it by pressing the little green run triangle next to the `main` method or next to a `test`.
 
 **Visual Studio Code:** You can call `cargo build` by pressing `Ctrl + Shift + P` and typing build.
 This will build the project associated with the currently opened file.
@@ -35,11 +33,11 @@ It also gives you an idea of the fields in `Stack` and `StackElem`
 Additionally you can try to implement the required methods for the Iterator trait.
 On calling the required method, the iterator should simply pop off the first element.
 You can look up the _Required Methods_ here: https://doc.rust-lang.org/std/iter/trait.Iterator.html 
-In the implementation sekelton there is already the field `Item` which indicates the returned type of the iterator.
+In the implementation sekelton there is already the field `Item` which indicates the type of the items that is iterated over.
 
 To run the tests for the iterator you have to uncomment the tests in the `simple_stack/tests/simple_stack.rs` file.
 
-### Chaning the Simple Stack to take &str
+### Changing the Simple Stack to take &str
 
 If your Stack is working and the tests have passed, you can try to change the type of the content from `i32` to `&str`.
 As you have learned in the lecture, a struct containing references needs explicit lifetimes.
