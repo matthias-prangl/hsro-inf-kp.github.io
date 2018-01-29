@@ -279,19 +279,49 @@ Hinweis auf expect() liefert ok, panic bei E.
 # Memory Safety
 
 +++
-- Rust provides memory safety without the need for a garbage collector. 
-- The system is designed to be memory safe, and it does not permit null pointers, dangling pointers, or data races in safe code.
-- Rust core library provides an option type, which can be used to test if a pointer has Some value or None
-- Rust also introduces additional syntax to manage lifetimes, and the compiler reasons about these through its borrow checker.
----
+## Memory Safety - General
 
+- Rust provides memory safety without the need for a garbage collector
+- The concept of Ownership and Borrowing builds the foundation for memory management
+- No permission of null pointers, dangling pointers, or data races in safe code
+- Rust core library provides an option type, which can be used to test if a pointer has Some value or None
+- Aditional syntax to manage lifetimes, through its borrow checker for the compiler
+
++++
+
+# Memory Management
++++
+## Memory Management - General
+
+- Rust does not use an automated garbage collection 
+- Memory and other resources are managed through resource acquisition is initialization (RAII)
+- Rust favors stack allocation of values and does not perform implicit boxing
+- Safety of such pointers is verified at compile time by the borrow checker 
+
+Note: RAII = resource aquisition is initialization, with optional reference counting
+      borrow checker...wegen dangling pointers und anderem verhalten
++++
+
+## Box, Stack and Heap
+
+- All Values in Rust are stack allocated by default
+- Values can be boxed (allocated in the heap) by creating a Box <T>
+- Box is a smart pointer to a heap allocated value of type T
+- Boxed values can be dereferenced using the * operator
+- box goes out of scope, its destructor is called, 
+  the inner object is destroyed, and the memory in the heap is freed
+
+---
 # Ownership
 +++
+## Ownership - General
+
+- The ownership system is a prime example of a zero-cost abstraction
+- Things will be done at compile time, no losses at runtime 
 - Variable bindings (let) have a property in Rust: they have ownership of what they are bound to
 - When a binding goes out of scope, Rust will free the bound resources
 - Happens deterministically at the end of the scope
-- The ownership system is a prime example of a zero-cost abstraction. 
-- Things will be done at compile time, no losses at runtime 
+
 
 +++
 ## Ownership and Moves
