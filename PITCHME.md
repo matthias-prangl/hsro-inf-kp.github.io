@@ -59,7 +59,7 @@ cargo new new_project
 cargo new new_bin_project --bin
 ```
 
-Generates completet project structure
+Generates complete project structure
 
 ```bash
 ├── Cargo.toml

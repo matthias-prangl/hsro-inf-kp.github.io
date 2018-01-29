@@ -11,6 +11,18 @@ Usually CLion uses CMake to build C Projects. The IDE will show an error about n
 This will build the project associated with the currently opened file.
 To run the program or tests call `cargo run` or `cargo test` in the same way.
 
+You can find the files for the exercises on the desktop of your virtual machine.
+Every Exercise is in a separate folder with an appropriate name.
+
+## Guessing Game
+
+Implement a number guessing game.
+This is a binary project, so you only need to be concerned about the file `guessing_game/src/main.rs`.
+
+- First read an input from `stdin`. The required imports are already in scope. 
+- Parse that input to an `u32` value. You can use the `parse` and `trim` methods for strings. The documentation might be helpful: https://doc.rust-lang.org/std/string/struct.String.html
+- Match your input to the secret number. Can you figure out how to use the `Ordering` enum that has been brought into scope to match?
+- Do all of this in a loop.
 
 ## Simple Stack
 
