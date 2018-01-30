@@ -275,22 +275,10 @@ Error propagation nur bei Funktionen die Result liefern.
 Hinweis auf expect() liefert ok, panic bei E.
 
 ---
-
-# Memory Safety
-
-+++
-## Memory Safety - General
-
-- Rust provides memory safety without the need for a garbage collector
-- The concept of Ownership and Borrowing builds the foundation for memory management
-- No permission of null pointers, dangling pointers, or data races in safe code
-- Rust core library provides an option type, which can be used to test if a pointer has Some value or None
-- Aditional syntax to manage lifetimes, through its borrow checker for the compiler
-
-+++
-
 # Memory Management
+
 +++
+
 ## Memory Management - General
 
 - Rust does not use an automated garbage collection 
@@ -300,6 +288,7 @@ Hinweis auf expect() liefert ok, panic bei E.
 
 Note: RAII = resource aquisition is initialization, with optional reference counting
       borrow checker...wegen dangling pointers und anderem verhalten
+
 +++
 
 ## Box, Stack and Heap
@@ -311,27 +300,81 @@ Note: RAII = resource aquisition is initialization, with optional reference coun
 - box goes out of scope, its destructor is called, 
   the inner object is destroyed, and the memory in the heap is freed
 
+```rust
+// This function takes ownership of the heap allocated memory
+fn destroy_box(c: Box<i32>) {
+    println!("Destroying a box that contains {}", c);
+```
 ---
-# Ownership
+
+# Memory Safety
+
 +++
+
+## Memory Safety - General
+
+- Rust provides memory safety without the need for a garbage collector
+- The concept of Ownership and Borrowing builds the foundation for memory management
+- No permission of null pointers, dangling pointers, or data races in safe code
+- Rust core library provides an option type, which can be used to test if a pointer has Some value or None
+- Aditional syntax to manage lifetimes, through its borrow checker for the compiler
+
++++
+
+## Memory Safety - Dangling Pointer
+
+C has no garbage collection so you can easily end up with a dangling pointer.
+A dangling pointer points to a memory location that might already have been freed
+
+```rust
+char* dangle() {
+    char s[20];
+    strcpy(s, "This is no good!");
+    return s;
+}```
+Note:Even though modern compilers will warn you about returning the address of stack memory this function would compile whithout errors. In Rust a similar program would not compile, because the compiler has no way of knowing where the returned reference comes from and how long it is valid.
+
+---
+
+# Ownership
+
++++
+
 ## Ownership - General
 
 - The ownership system is a prime example of a zero-cost abstraction
+- Every value in Rust has a single owner. This owner determines the lifetime of the value
 - Things will be done at compile time, no losses at runtime 
 - Variable bindings (let) have a property in Rust: they have ownership of what they are bound to
 - When a binding goes out of scope, Rust will free the bound resources
-- Happens deterministically at the end of the scope
 
+```rust
+struct Car { model: String, year: u16 }
+
+fn main() {
+    let mut cars = vec![ //cars gets allocated
+        Car{model: "A4".to_string(), year: 2006}, 
+        Car{model: "Clio".to_string(), year: 1998} ];
+} //cars gets dropped
+```
+Note: Since each value has a singe owner, in this example each Car owns its fields which in turn own their values. cars owns a vector which owns its elements of type Car. As soon as the vector leaves the scope every value associated with cars is dropped. Dropping a value means the memory associated with this value is freed.
 
 +++
 ## Ownership and Moves
 
-- Variables are in charge of freeing their own resources
-- Thats why resources can only have one owner
+- Variables are in charge of freeing their own resources, one owner
 - Prevents resources being released more than once
 - Note that not all variables own resources (e.g. references)
-- Assignments (let x=y) or passing function arguments by value (foo(x)) transfers the ownership
+- Value doesn't get copied like for example in C++. 
+- In Rust the ownership of that value is moved to the new variable. 
 
+```rust
+    let a = Box::new((123, 321));
+    let b = a;  //compiler hint: value moved here
+    let c = a;  //compiler error: value used here after move
+```
+
+Note: means that the source of the value becomes uninitialized, example we try to reassign a Box twice, which results in an error
 +++
 <div class="twocolumn">
   <div>
@@ -348,7 +391,7 @@ Note: RAII = resource aquisition is initialization, with optional reference coun
 
 # Borrowing & References
 
-Note: Nicht immer sinnvoll Ownership wegzugeben daher borrowing
+Note: Meistens wollen wir an Daten ansprechen ohne die Ownership zu übernehmen. Um das zu erreichen benutzt rust einen borrowing mechanismus und den borrow checker im compiler
 
 +++
 
