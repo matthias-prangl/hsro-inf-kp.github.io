@@ -383,7 +383,6 @@ Note: means that the source of the value becomes uninitialized, example we try t
     - Creates packages
   </div>
   <div>
-    <img src="https://raw.githubusercontent.com/matthias-prangl/rust/master/assets/strings_in_memory.PNG" alt="cargo">
   <img src="https://raw.githubusercontent.com/matthias-prangl/rust/master/assets/move_string_in_memory.PNG" alt="cargo">
   </div>
 </div>
