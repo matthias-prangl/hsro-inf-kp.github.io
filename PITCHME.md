@@ -375,17 +375,7 @@ Note: Since each value has a singe owner, in this example each Car owns its fiel
 ```
 
 Note: means that the source of the value becomes uninitialized, example we try to reassign a Box twice, which results in an error
-+++
-<div class="twocolumn">
-  <div>
-    - Rust package manager </br>
-    - Invokes rustc to compile </br>
-    - Creates packages
-  </div>
-  <div>
-  <img src="https://raw.githubusercontent.com/matthias-prangl/rust/master/assets/move_string_in_memory.PNG" alt="cargo">
-  </div>
-</div>
+
 ---
 
 # Borrowing & References
