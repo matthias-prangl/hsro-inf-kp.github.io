@@ -300,11 +300,6 @@ Note: RAII = resource aquisition is initialization, with optional reference coun
 - box goes out of scope, its destructor is called, 
   the inner object is destroyed, and the memory in the heap is freed
 
-```rust
-// This function takes ownership of the heap allocated memory
-fn destroy_box(c: Box<i32>) {
-    println!("Destroying a box that contains {}", c);
-```
 ---
 
 # Memory Safety
@@ -348,15 +343,6 @@ Note:Even though modern compilers will warn you about returning the address of s
 - Variable bindings (let) have a property in Rust: they have ownership of what they are bound to
 - When a binding goes out of scope, Rust will free the bound resources
 
-```rust
-struct Car { model: String, year: u16 }
-
-fn main() {
-    let mut cars = vec![ //cars gets allocated
-        Car{model: "A4".to_string(), year: 2006}, 
-        Car{model: "Clio".to_string(), year: 1998} ];
-} //cars gets dropped
-```
 Note: Since each value has a singe owner, in this example each Car owns its fields which in turn own their values. cars owns a vector which owns its elements of type Car. As soon as the vector leaves the scope every value associated with cars is dropped. Dropping a value means the memory associated with this value is freed.
 
 +++
